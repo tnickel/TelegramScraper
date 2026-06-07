@@ -18,7 +18,7 @@ def parse_args():
     parser.add_argument("--from-date", type=str, default="2025-01-01", help="Startdatum (YYYY-MM-DD)")
     parser.add_argument("--to-date", type=str, default="2026-06-01", help="Enddatum (YYYY-MM-DD)")
     parser.add_argument("--model", type=str, default="1", help="Tick-Modell (0=Every tick, 1=1m OHLC, 2=Open price, 4=Real ticks)")
-    parser.add_argument("--deposit", type=int, default=10000, help="Startkapital")
+    parser.add_argument("--deposit", type=str, default="10000", help="Startkapital")
     parser.add_argument("--leverage", type=str, default="1:100", help="Hebel")
     parser.add_argument("--keep-open", action="store_true", help="MetaTrader nach dem Test offen lassen und sichtbar ausführen")
     return parser.parse_args()
@@ -144,15 +144,21 @@ def main():
         "set_file_path": str(set_path) if set_path else ""
     }
     
+    # Clean deposit and leverage
+    deposit_clean = "".join(c for c in str(args.deposit) if c.isdigit())
+    deposit_int = int(deposit_clean) if deposit_clean else 10000
+    
+    leverage_clean = args.leverage.replace("\\", "")
+
     # Construct config
     single_config = {
         "output_directory": str((backtester_root / "backtest_reports" / "batch_runs").resolve()),
         "settings": {
             "from_date": from_date,
             "to_date": to_date,
-            "deposit": args.deposit,
+            "deposit": deposit_int,
             "currency": "USD",
-            "leverage": args.leverage,
+            "leverage": leverage_clean,
             "model": model_int,
             "use_virtual_desktop": not args.keep_open,
             "auto_kill_mt5": not args.keep_open
