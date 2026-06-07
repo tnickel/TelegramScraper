@@ -1,0 +1,43 @@
+__Lot_Sep__==== LOT SIZING ===
+UseManualLot=false
+Lots=0.01
+Risk=0.1
+__Trade_Sep__==== TRADE MANAGEMENT ===
+TakeProfit=500
+StopLossPercent=0.0
+TrailStart=120
+Trail=60
+Slippage=50
+__Signal_Sep__==== ENTRY SIGNAL ===
+BarProcessing=10
+PeriodBar=10
+AvBarPercent=10
+MinimumBarSize=20
+__Grid_Sep__==== GRID ===
+UseAddOrder=true
+MaxOrders=20
+PipsStep=50
+__Session_Sep__==== SESSION & FILTERS ===
+TimeStart=0
+TimeEnd=23
+MaxSpread=200
+OpenTime=0
+__NewsPanel_Sep__==== NEWS PANEL ===
+ShowNewsPanel=true
+NewsDisplayHours=6
+MaxNewsLines=8
+__General_Sep__==== GENERAL ===
+Info=true
+Magic=2025
+__NF_Sep__==== NEWS FILTER ===
+UseNewsFilter=true
+NewsImpactLevel=1
+MinutesBeforeNews=60
+MinutesAfterNews=60
+UseKeywordFilter=true
+NewsKeywords=FOMC,NFP,CPI,PPI,GDP,Fed,Interest Rate,Nonfarm,Unemployment,PCE,Retail Sales,ISM,Fed Chair,ADP,Jobless
+FilterUSD=true
+FilterXAU=true
+__NF_URL_Sep__==== WEBREQUEST SETUP ===
+WebRequestBaseURL=https://nfs.faireconomy.media
+BrokerGMTOffset=2

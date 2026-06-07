@@ -1,0 +1,9 @@
+ColorTargetsUP=16760576
+ColorTargetsDOWN=55295
+SizeTargetsArrows=13
+ColorSTOP=255
+StopTarget1=1.0
+MenuAlert==== Alerts ===
+AlertsSound=true
+AlertsEmail=false
+AlertsNotify=true

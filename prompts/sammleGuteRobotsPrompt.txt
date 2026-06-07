@@ -1,0 +1,3 @@
+Führe die Analyse- und Organisations-Subroutine gemäß den Anweisungen in der Datei report/subroutine_instruction.md aus: 
+Lese dazu die neuen Chat-Chunks in extracted_data/chat_chunks/, identifiziere die von Usern positiv bewerteten EAs, 
+gleiche sie mit den Dateien in extracted_data/forex_files/ ab, aktualisiere das Skript src/analyze_organize.py und führe es aus.

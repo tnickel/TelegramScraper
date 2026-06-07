@@ -1,0 +1,2691 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telegram Chat &amp; Forex EA Extractor – Professionelles Handbuch</title>
+  <style>
+    /* ============================================================
+       PRINT & PAGE STYLES
+    ============================================================ */
+    @page {
+      size: A4;
+      margin: 20mm 20mm 25mm 20mm;
+    }
+    @page :first {
+      margin-top: 0;
+    }
+    @media print {
+      .no-print { display: none !important; }
+      .page-break { page-break-after: always; break-after: page; }
+      .avoid-break { page-break-inside: avoid; break-inside: avoid; }
+      body { font-size: 11pt; }
+    }
+
+    /* ============================================================
+       BASE
+    ============================================================ */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
+      font-size: 12px;
+      line-height: 1.7;
+      color: #1a202c;
+      background: #fff;
+    }
+    a { color: #6d28d9; text-decoration: none; }
+
+    /* ============================================================
+       COVER PAGE
+    ============================================================ */
+    .cover {
+      width: 100%;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0b0f19 0%, #1e1b4b 50%, #0b0f19 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(168,85,247,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(59,130,246,0.12) 0%, transparent 60%);
+    }
+    .cover-content { position: relative; z-index: 1; max-width: 800px; }
+    .cover-badge {
+      display: inline-block;
+      background: rgba(168,85,247,0.2);
+      border: 1px solid rgba(168,85,247,0.5);
+      color: #c084fc;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+    .cover-title {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 0%, #c084fc 50%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .cover-subtitle {
+      font-size: 16px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+    .cover-hero-img {
+      width: 100%;
+      max-width: 700px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      margin: 30px auto;
+      display: block;
+    }
+    .cover-meta {
+      margin-top: 40px;
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .cover-meta-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    .cover-meta-label {
+      font-size: 10px;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .cover-meta-value {
+      font-size: 13px;
+      color: rgba(255,255,255,0.9);
+      font-weight: 600;
+    }
+    .cover-footer {
+      position: absolute;
+      bottom: 30px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 10px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ============================================================
+       CONTENT LAYOUT
+    ============================================================ */
+    .content-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 30px 30px;
+    }
+
+    /* ============================================================
+       TABLE OF CONTENTS
+    ============================================================ */
+    .toc {
+      background: #f8f7ff;
+      border-radius: 12px;
+      padding: 30px 40px;
+      margin: 30px 0;
+      border: 1px solid #e5e7eb;
+    }
+    .toc-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a202c;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #6d28d9;
+    }
+    .toc-entry {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 5px 0;
+      border-bottom: 1px dotted #d1d5db;
+      color: #374151;
+      font-size: 12px;
+    }
+    .toc-entry:last-child { border-bottom: none; }
+    .toc-entry.h1 { font-weight: 700; font-size: 13px; margin-top: 10px; color: #111827; }
+    .toc-entry.h2 { padding-left: 20px; }
+    .toc-entry.h3 { padding-left: 40px; color: #6b7280; font-size: 11px; }
+    .toc-dots { flex: 1; border-bottom: 1px dotted #d1d5db; margin: 0 8px; position: relative; top: -3px; }
+    .toc-page { color: #6d28d9; font-weight: 600; }
+
+    /* ============================================================
+       SECTION HEADERS
+    ============================================================ */
+    h1.section-heading {
+      font-size: 28px;
+      font-weight: 800;
+      color: #1a202c;
+      margin: 40px 0 15px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid #6d28d9;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    h1.section-heading .sec-num {
+      background: linear-gradient(135deg, #6d28d9, #4f46e5);
+      color: #fff;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    h2.sub-heading {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a202c;
+      margin: 30px 0 12px;
+      padding-left: 14px;
+      border-left: 4px solid #a855f7;
+    }
+    h3.subsub-heading {
+      font-size: 15px;
+      font-weight: 700;
+      color: #374151;
+      margin: 20px 0 8px;
+    }
+    p { margin-bottom: 12px; color: #374151; }
+
+    /* ============================================================
+       CALLOUT BOXES
+    ============================================================ */
+    .callout {
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .callout-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .callout-content h4 { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+    .callout-content p { font-size: 12px; margin: 0; }
+    .callout.info { background: #eff6ff; border: 1px solid #bfdbfe; }
+    .callout.info .callout-icon, .callout.info h4 { color: #1d4ed8; }
+    .callout.warning { background: #fffbeb; border: 1px solid #fde68a; }
+    .callout.warning .callout-icon, .callout.warning h4 { color: #d97706; }
+    .callout.success { background: #f0fdf4; border: 1px solid #bbf7d0; }
+    .callout.success .callout-icon, .callout.success h4 { color: #15803d; }
+    .callout.purple { background: #f5f3ff; border: 1px solid #ddd6fe; }
+    .callout.purple .callout-icon, .callout.purple h4 { color: #7c3aed; }
+    .callout.danger { background: #fff1f2; border: 1px solid #fecdd3; }
+    .callout.danger .callout-icon, .callout.danger h4 { color: #be123c; }
+
+    /* ============================================================
+       TABLES
+    ============================================================ */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 11.5px;
+    }
+    thead tr {
+      background: linear-gradient(135deg, #6d28d9, #4f46e5);
+      color: #fff;
+    }
+    thead th {
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    tbody tr:nth-child(even) { background: #f8f7ff; }
+    tbody tr:hover { background: #ede9fe; }
+    tbody td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #e5e7eb;
+      color: #374151;
+      vertical-align: top;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .badge-purple { background: #ede9fe; color: #7c3aed; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-green { background: #dcfce7; color: #15803d; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-yellow { background: #fef3c7; color: #d97706; }
+    .badge-gray { background: #f3f4f6; color: #6b7280; }
+
+    /* ============================================================
+       CODE BLOCKS
+    ============================================================ */
+    .code-block {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 16px 0;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 11px;
+      line-height: 1.6;
+      overflow-x: auto;
+      position: relative;
+    }
+    .code-block .code-lang {
+      position: absolute;
+      top: 8px;
+      right: 14px;
+      font-size: 10px;
+      color: rgba(255,255,255,0.3);
+      font-family: 'Segoe UI', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .code-block pre { color: #e2e8f0; margin: 0; }
+    .code-block .kw { color: #c084fc; } /* keyword */
+    .code-block .fn { color: #7dd3fc; } /* function */
+    .code-block .st { color: #86efac; } /* string */
+    .code-block .cm { color: #6b7280; } /* comment */
+    .code-block .nu { color: #f9a8d4; } /* number */
+
+    /* ============================================================
+       IMAGES
+    ============================================================ */
+    .img-wrapper {
+      margin: 20px 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .img-wrapper img {
+      width: 100%;
+      display: block;
+    }
+    .img-caption {
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+      padding: 8px 16px;
+      font-size: 11px;
+      color: #6b7280;
+      text-align: center;
+      font-style: italic;
+    }
+    .img-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    /* ============================================================
+       MERMAID / DIAGRAM WRAPPER
+    ============================================================ */
+    .diagram-wrapper {
+      background: #fafafa;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+    .diagram-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #6d28d9;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .mermaid { min-width: 500px; }
+
+    /* ============================================================
+       STAT CARDS
+    ============================================================ */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .stat-card {
+      background: linear-gradient(135deg, #1e1b4b, #312e81);
+      border-radius: 10px;
+      padding: 18px 16px;
+      text-align: center;
+      color: #fff;
+    }
+    .stat-number {
+      font-size: 30px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #c084fc, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 10px;
+      color: rgba(255,255,255,0.6);
+      margin-top: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ============================================================
+       PIPELINE STEPS
+    ============================================================ */
+    .pipeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 20px 0;
+    }
+    .pipeline-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 20px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 0;
+      position: relative;
+    }
+    .pipeline-step:first-child { border-radius: 10px 10px 0 0; }
+    .pipeline-step:last-child { border-radius: 0 0 10px 10px; }
+    .pipeline-step:not(:last-child)::after {
+      content: '↓';
+      position: absolute;
+      bottom: -14px;
+      left: 28px;
+      color: #6d28d9;
+      font-size: 18px;
+      font-weight: bold;
+      z-index: 1;
+    }
+    .pipeline-step:not(:last-child) { margin-bottom: 1px; }
+    .pipeline-num {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #6d28d9, #4f46e5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .pipeline-info h4 { font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 4px; }
+    .pipeline-info p { font-size: 11px; color: #6b7280; margin: 0; }
+    .pipeline-step:nth-child(1) { border-left: 4px solid #6d28d9; }
+    .pipeline-step:nth-child(2) { border-left: 4px solid #2563eb; }
+    .pipeline-step:nth-child(3) { border-left: 4px solid #0891b2; }
+    .pipeline-step:nth-child(4) { border-left: 4px solid #059669; }
+    .pipeline-step:nth-child(5) { border-left: 4px solid #d97706; }
+    .pipeline-step:nth-child(6) { border-left: 4px solid #dc2626; }
+
+    /* ============================================================
+       MODULE CARDS
+    ============================================================ */
+    .module-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .module-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 18px;
+      background: #fff;
+    }
+    .module-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .module-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #6d28d9, #4f46e5);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .module-name { font-size: 13px; font-weight: 700; color: #111827; }
+    .module-file { font-size: 10px; color: #6d28d9; font-family: monospace; }
+    .module-desc { font-size: 11px; color: #6b7280; line-height: 1.6; }
+
+    /* ============================================================
+       PROMPT DISPLAY
+    ============================================================ */
+    .prompt-box {
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 16px 0;
+      border: 1px solid #334155;
+    }
+    .prompt-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #1e293b;
+    }
+    .prompt-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #a855f7;
+      font-weight: 700;
+    }
+    .prompt-text {
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 11px;
+      color: #cbd5e1;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+    .prompt-highlight { color: #86efac; font-weight: 600; }
+    .prompt-var { color: #7dd3fc; }
+    .prompt-json { color: #f9a8d4; }
+
+    /* ============================================================
+       FILE TREE
+    ============================================================ */
+    .file-tree {
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 20px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.8;
+      margin: 16px 0;
+    }
+    .file-tree .dir { color: #7dd3fc; }
+    .file-tree .file { color: #e2e8f0; }
+    .file-tree .comment { color: #6b7280; }
+
+    /* ============================================================
+       ARCHITECTURE ASCII
+    ============================================================ */
+    .arch-diagram {
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 24px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin: 16px 0;
+      overflow-x: auto;
+    }
+    .arch-diagram .box { color: #c084fc; }
+    .arch-diagram .arrow { color: #818cf8; }
+    .arch-diagram .label { color: #86efac; }
+
+    /* ============================================================
+       RISK INDICATOR
+    ============================================================ */
+    .risk-indicator {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    .risk-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .risk-low .risk-dot { background: #22c55e; }
+    .risk-medium .risk-dot { background: #f59e0b; }
+    .risk-high .risk-dot { background: #ef4444; }
+    .risk-extreme .risk-dot { background: #7c3aed; }
+
+    /* ============================================================
+       SECTION DIVIDER
+    ============================================================ */
+    .section-divider {
+      border: none;
+      border-top: 2px solid #e5e7eb;
+      margin: 40px 0;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .doc-footer {
+      background: #0f172a;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 30px;
+      font-size: 11px;
+      margin-top: 60px;
+    }
+
+    /* ============================================================
+       PRINT BUTTON
+    ============================================================ */
+    .print-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(135deg, #6d28d9, #4f46e5);
+      color: #fff;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(109,40,217,0.4);
+      z-index: 999;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .print-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(109,40,217,0.5);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Print Button -->
+<button class="print-btn no-print" onclick="window.print()">🖨️ Als PDF Drucken</button>
+
+<!-- ============================================================
+     COVER PAGE
+============================================================ -->
+<div class="cover">
+  <div class="cover-content">
+    <div class="cover-badge">Offizielles Benutzerhandbuch · Version 2.0</div>
+    <h1 class="cover-title">
+      Telegram Chat &amp; Forex Expert Advisor<br>Extractor
+    </h1>
+    <p class="cover-subtitle">
+      Das vollständige Handbuch zur automatisierten Extraktion, KI-gestützten Analyse 
+      und Backtesting von Forex Expert Advisors aus Telegram-Gruppenkanälen
+    </p>
+    <img 
+      src="../../../LandingPage_ki-software-schmiede/assets/telegram_scraper_hero.png" 
+      alt="Telegram Scraper Hero" 
+      class="cover-hero-img"
+      onerror="this.style.display='none'"
+    >
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Status</span>
+        <span class="cover-meta-value">✅ Produktionsbereit</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Plattform</span>
+        <span class="cover-meta-value">Windows 10/11</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Version</span>
+        <span class="cover-meta-value">Python 3.8+</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Stand</span>
+        <span class="cover-meta-value">Juni 2026</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Entwickler</span>
+        <span class="cover-meta-value">Thomas Nickel</span>
+      </div>
+    </div>
+  </div>
+  <div class="cover-footer">
+    © 2026 AntiGravity Software | KI-Augmented Engineering | tnickel-ki.de
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============================================================
+     CONTENT
+============================================================ -->
+<div class="content-wrapper">
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc avoid-break">
+    <div class="toc-title">📋 Inhaltsverzeichnis</div>
+    
+    <div class="toc-entry h1"><span>1. Projektübersicht &amp; Motivation</span><span class="toc-dots"></span><span class="toc-page">3</span></div>
+    <div class="toc-entry h2"><span>1.1 Das Problem der Chat-Flut</span><span class="toc-dots"></span><span class="toc-page">3</span></div>
+    <div class="toc-entry h2"><span>1.2 Die Lösung: Vollautomatisierter Workflow</span><span class="toc-dots"></span><span class="toc-page">4</span></div>
+    <div class="toc-entry h2"><span>1.3 Kennzahlen auf einen Blick</span><span class="toc-dots"></span><span class="toc-page">4</span></div>
+
+    <div class="toc-entry h1"><span>2. Systemarchitektur &amp; Datenfluss</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
+    <div class="toc-entry h2"><span>2.1 Gesamtarchitektur</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
+    <div class="toc-entry h2"><span>2.2 6-Stufen Pipeline</span><span class="toc-dots"></span><span class="toc-page">6</span></div>
+    <div class="toc-entry h2"><span>2.3 Threading-Modell</span><span class="toc-dots"></span><span class="toc-page">7</span></div>
+    <div class="toc-entry h2"><span>2.4 Datenfluss-Diagramm</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
+
+    <div class="toc-entry h1"><span>3. Tech-Stack &amp; Bibliotheken</span><span class="toc-dots"></span><span class="toc-page">9</span></div>
+    <div class="toc-entry h2"><span>3.1 Kern-Technologien</span><span class="toc-dots"></span><span class="toc-page">9</span></div>
+    <div class="toc-entry h2"><span>3.2 KI &amp; LLM-Integration</span><span class="toc-dots"></span><span class="toc-page">10</span></div>
+    <div class="toc-entry h2"><span>3.3 Datenbanken</span><span class="toc-dots"></span><span class="toc-page">11</span></div>
+
+    <div class="toc-entry h1"><span>4. Modulbeschreibungen</span><span class="toc-dots"></span><span class="toc-page">12</span></div>
+    <div class="toc-entry h2"><span>4.1 telegram_extractor_gui.py</span><span class="toc-dots"></span><span class="toc-page">12</span></div>
+    <div class="toc-entry h2"><span>4.2 telegram_extractor.py</span><span class="toc-dots"></span><span class="toc-page">13</span></div>
+    <div class="toc-entry h2"><span>4.3 telegram_api_downloader.py</span><span class="toc-dots"></span><span class="toc-page">14</span></div>
+    <div class="toc-entry h2"><span>4.4 extract_ea_details_llm.py</span><span class="toc-dots"></span><span class="toc-page">15</span></div>
+    <div class="toc-entry h2"><span>4.5 generate_dashboard.py &amp; dashboard_server.py</span><span class="toc-dots"></span><span class="toc-page">16</span></div>
+    <div class="toc-entry h2"><span>4.6 run_batch_backtests.py</span><span class="toc-dots"></span><span class="toc-page">17</span></div>
+    <div class="toc-entry h2"><span>4.7 analyze_organize.py</span><span class="toc-dots"></span><span class="toc-page">18</span></div>
+
+    <div class="toc-entry h1"><span>5. Verwendete Prompts</span><span class="toc-dots"></span><span class="toc-page">19</span></div>
+    <div class="toc-entry h2"><span>5.1 Chat-Chunk System-Prompt</span><span class="toc-dots"></span><span class="toc-page">19</span></div>
+    <div class="toc-entry h2"><span>5.2 LLM Analyse-Prompt (OpenRouter)</span><span class="toc-dots"></span><span class="toc-page">20</span></div>
+    <div class="toc-entry h2"><span>5.3 Subroutinen-Prompt</span><span class="toc-dots"></span><span class="toc-page">21</span></div>
+
+    <div class="toc-entry h1"><span>6. Installationsanleitung</span><span class="toc-dots"></span><span class="toc-page">22</span></div>
+    <div class="toc-entry h2"><span>6.1 Systemvoraussetzungen</span><span class="toc-dots"></span><span class="toc-page">22</span></div>
+    <div class="toc-entry h2"><span>6.2 Installation Schritt-für-Schritt</span><span class="toc-dots"></span><span class="toc-page">22</span></div>
+    <div class="toc-entry h2"><span>6.3 Konfiguration</span><span class="toc-dots"></span><span class="toc-page">23</span></div>
+
+    <div class="toc-entry h1"><span>7. Bedienungsanleitung (GUI)</span><span class="toc-dots"></span><span class="toc-page">24</span></div>
+    <div class="toc-entry h2"><span>7.1 Methode A: JSON Export (Offline)</span><span class="toc-dots"></span><span class="toc-page">24</span></div>
+    <div class="toc-entry h2"><span>7.2 Methode B: API Live-Download</span><span class="toc-dots"></span><span class="toc-page">25</span></div>
+    <div class="toc-entry h2"><span>7.3 Das Web-Dashboard</span><span class="toc-dots"></span><span class="toc-page">26</span></div>
+
+    <div class="toc-entry h1"><span>8. Datenbank-Dokumentation</span><span class="toc-dots"></span><span class="toc-page">27</span></div>
+    <div class="toc-entry h2"><span>8.1 SQLite-Schema</span><span class="toc-dots"></span><span class="toc-page">27</span></div>
+    <div class="toc-entry h2"><span>8.2 Daten-Ausgabeformate</span><span class="toc-dots"></span><span class="toc-page">28</span></div>
+
+    <div class="toc-entry h1"><span>9. Forex-Dateitypen &amp; MetaTrader</span><span class="toc-dots"></span><span class="toc-page">29</span></div>
+    <div class="toc-entry h1"><span>10. KI-Workflow: Chunking &amp; LLM-Analyse</span><span class="toc-dots"></span><span class="toc-page">30</span></div>
+    <div class="toc-entry h1"><span>11. Backtesting-Integration</span><span class="toc-dots"></span><span class="toc-page">32</span></div>
+    <div class="toc-entry h1"><span>12. Sicherheit &amp; Best Practices</span><span class="toc-dots"></span><span class="toc-page">34</span></div>
+    <div class="toc-entry h1"><span>13. Fehlerbehandlung &amp; Troubleshooting</span><span class="toc-dots"></span><span class="toc-page">35</span></div>
+    <div class="toc-entry h1"><span>14. Entwickler-Richtlinien</span><span class="toc-dots"></span><span class="toc-page">37</span></div>
+    <div class="toc-entry h1"><span>15. Glossar &amp; Referenzen</span><span class="toc-dots"></span><span class="toc-page">39</span></div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================
+       SECTION 1: PROJECT OVERVIEW
+  ============================================================ -->
+  <h1 class="section-heading"><span class="sec-num">1</span> Projektübersicht &amp; Motivation</h1>
+
+  <h2 class="sub-heading">1.1 Das Problem der Chat-Flut</h2>
+  <p>
+    In modernen Tech-Communities auf Telegram werden täglich Hunderte von Softwarepaketen, 
+    Einstellungsdateien und Erfahrungsberichte geteilt. Für Forex-Trading-Communitys ist dies 
+    besonders ausgeprägt: Ein einzelner Gruppenkanal kann über <strong>200.000 Nachrichten</strong> 
+    angesammelt haben, in denen Nutzer Expert Advisors (Handelsroboter), deren Einstellungen 
+    und Ergebnisse diskutieren.
+  </p>
+  <p>
+    Für einen menschlichen Analysten ist es praktisch unmöglich, diese Datenmasse zu bewältigen:
+  </p>
+
+  <div class="callout warning">
+    <span class="callout-icon">⚠️</span>
+    <div class="callout-content">
+      <h4>Das manuelle Problem</h4>
+      <p>
+        200.000 Nachrichten manuell durchzulesen würde bei einem Lesetempo von 1 Minute pro Nachricht 
+        <strong>über 3.300 Stunden</strong> dauern – das entspricht fast 2 Jahren Vollzeitarbeit. 
+        Dazu kommen hunderte manuell heruntergeladene und zugeordnete Dateien.
+      </p>
+    </div>
+  </div>
+
+  <h2 class="sub-heading">1.2 Die Lösung: Vollautomatisierter Workflow</h2>
+  <p>
+    Der <strong>Telegram Chat &amp; Forex EA Extractor</strong> ist eine spezialisierte 
+    Python-Anwendung, die diesen Prozess vollständig automatisiert:
+  </p>
+
+  <ul style="margin-left: 20px; margin-bottom: 16px; color: #374151; font-size: 12px; line-height: 2;">
+    <li><strong>📥 Automatisches Herunterladen</strong> von Chats über Offline-JSON-Export oder Live-API</li>
+    <li><strong>✂️ Intelligentes Chunking</strong> der Chatlogs in KI-optimierte 500-Nachrichten-Portionen</li>
+    <li><strong>🤖 KI-Analyse</strong> mit OpenRouter/Gemini LLMs zur Extraktion von EA-Details</li>
+    <li><strong>📊 Interaktives Web-Dashboard</strong> zur Visualisierung aller gesammelten EAs</li>
+    <li><strong>⚙️ Automatisierter Backtest-Workflow</strong> mit MetaTrader 5 Integration</li>
+    <li><strong>📁 Intelligente Dateikatalogisierung</strong> aller extrahierten Forex-Dateien</li>
+  </ul>
+
+  <div class="callout success">
+    <span class="callout-icon">⚡</span>
+    <div class="callout-content">
+      <h4>Effizienzgewinn durch KI-Augmented Engineering</h4>
+      <p>
+        Die gesamte Entwicklung dauerte dank KI-unterstützter Programmierung 
+        <strong>weniger als 4 Stunden</strong>. Das System spart dem Anwender das manuelle Sichten 
+        von über 200.000 Chatnachrichten sowie das Herunterladen und Zuordnen von Hunderten 
+        geteilter EA-Pakete.
+      </p>
+    </div>
+  </div>
+
+  <h2 class="sub-heading">1.3 Kennzahlen auf einen Blick</h2>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-number">200k+</div>
+      <div class="stat-label">Nachrichten verarbeitbar</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">6</div>
+      <div class="stat-label">Automatisierungsschritte</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">35</div>
+      <div class="stat-label">Postings pro LLM-Analyse</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">500</div>
+      <div class="stat-label">Nachrichten pro KI-Chunk</div>
+    </div>
+  </div>
+
+  <div class="img-wrapper">
+    <img src="../../../LandingPage_ki-software-schmiede/assets/telegram_process_automation.png" 
+         alt="Telegram Process Automation Overview"
+         onerror="this.style.display='none'">
+    <div class="img-caption">
+      Die vollautomatisierte Prozesskette: Vom rohen Telegram-Chat-Stream bis zum strukturierten 
+      EA-Katalog mit Backtest-Ergebnissen
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================
+       SECTION 2: ARCHITECTURE
+  ============================================================ -->
+  <h1 class="section-heading"><span class="sec-num">2</span> Systemarchitektur &amp; Datenfluss</h1>
+
+  <h2 class="sub-heading">2.1 Gesamtarchitektur</h2>
+  <p>
+    Das System folgt einer klar strukturierten Schichtenarchitektur mit konsequenter 
+    Trennung der Zuständigkeiten (<em>Separation of Concerns</em>). Es besteht aus 
+    sechs Kern-Python-Modulen, die über definierte Schnittstellen miteinander kommunizieren.
+  </p>
+
+  <div class="arch-diagram">
+<span class="box">┌─────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="box">│                    PRÄSENTATIONSSCHICHT (Frontend)                          │</span>
+<span class="box">│                                                                             │</span>
+<span class="box">│  ┌──────────────────────────────┐   ┌─────────────────────────────────┐    │</span>
+<span class="box">│  │  telegram_extractor_gui.py   │   │  dashboard_server.py (HTTP:8000)│    │</span>
+<span class="box">│  │  [Tkinter Desktop GUI]       │   │  [Web Dashboard API + Frontend] │    │</span>
+<span class="box">│  └──────────────┬───────────────┘   └─────────────────────────────────┘    │</span>
+<span class="box">└─────────────────┼───────────────────────────────────────────────────────────┘</span>
+                  <span class="arrow">│ steuert</span>
+<span class="box">┌─────────────────┼───────────────────────────────────────────────────────────┐</span>
+<span class="box">│                 ▼  LOGIKSCHICHT (Backend-Module)                            │</span>
+<span class="box">│                                                                             │</span>
+<span class="box">│  ┌──────────────────┐  ┌──────────────────┐  ┌────────────────────────┐    │</span>
+<span class="box">│  │telegram_extractor│  │telegram_api_down │  │extract_ea_details_llm  │    │</span>
+<span class="box">│  │[JSON-Parser]     │  │[Telethon Client] │  │[OpenRouter LLM Client] │    │</span>
+<span class="box">│  └────────┬─────────┘  └───────┬──────────┘  └────────────┬───────────┘    │</span>
+<span class="box">│           │                    │                           │                 │</span>
+<span class="box">│           └──────────────┬─────┘              ┌───────────┘                 │</span>
+<span class="box">│                          ▼                    ▼                             │</span>
+<span class="box">│  ┌────────────────────────────────────────────────────────────────────┐     │</span>
+<span class="box">│  │                    generate_dashboard.py                           │     │</span>
+<span class="box">│  │        [SQLite Import + HTML Dashboard Generator]                  │     │</span>
+<span class="box">│  └──────────────────────────────────────────────────────────────────┘     │</span>
+<span class="box">└─────────────────────────────────────────────────────────────────────────────┘</span>
+                  <span class="arrow">│ schreibt/liest</span>
+<span class="box">┌─────────────────┼───────────────────────────────────────────────────────────┐</span>
+<span class="box">│                 ▼  DATENSCHICHT                                             │</span>
+<span class="box">│                                                                             │</span>
+<span class="box">│  ┌───────────────────┐  ┌──────────────────┐  ┌──────────────────────┐     │</span>
+<span class="box">│  │ SQLite DB         │  │ JSON Cache       │  │ Filesystem           │     │</span>
+<span class="box">│  │ telegram_scraper  │  │ ea_insights.json │  │ forex_files/         │     │</span>
+<span class="box">│  │ .db               │  │                  │  │ chat_chunks/         │     │</span>
+<span class="box">│  └───────────────────┘  └──────────────────┘  └──────────────────────┘     │</span>
+<span class="box">└─────────────────────────────────────────────────────────────────────────────┘</span>
+  </div>
+
+  <h2 class="sub-heading">2.2 Die 6-Stufen Pipeline</h2>
+  <p>
+    Der gesamte Analyseprozess ist in einen <strong>6-stufigen Automatisierungs-Workflow</strong> 
+    unterteilt, der entweder komplett automatisch oder manuell Schritt für Schritt über das 
+    Web-Dashboard gesteuert werden kann.
+  </p>
+
+  <div class="pipeline">
+    <div class="pipeline-step avoid-break">
+      <div class="pipeline-num">1</div>
+      <div class="pipeline-info">
+        <h4>📥 Telegram-Extraktion</h4>
+        <p>Download der Chat-Daten via JSON-Export oder Live-API (Telethon). Extraktion aller 
+        Forex-Dateien (.ex4, .ex5, .mq4, .mq5, .set) und Aufteilung des Chatverlaufs in 
+        500-Nachrichten-Chunks. <em>Skript: telegram_extractor.py / telegram_api_downloader.py</em></p>
+      </div>
+    </div>
+    <div class="pipeline-step avoid-break">
+      <div class="pipeline-num">2</div>
+      <div class="pipeline-info">
+        <h4>🤖 EA-Details Analyse (LLM)</h4>
+        <p>Automatische Analyse der Chat-Chunks durch OpenRouter/Gemini-LLMs. 
+        Extraktion von Timeframes, Währungspaaren, Strategie, Risikoeinstufung und Community-Sentiment 
+        pro EA. <em>Skript: extract_ea_details_llm.py</em></p>
+      </div>
+    </div>
+    <div class="pipeline-step avoid-break">
+      <div class="pipeline-num">3</div>
+      <div class="pipeline-info">
+        <h4>📊 Dashboard-Update</h4>
+        <p>Import der LLM-Analyse-Ergebnisse in die SQLite-Datenbank und Generierung des 
+        interaktiven HTML-Dashboards. Alle EAs werden mit Score, Risiko-Rating und Details angezeigt.
+        <em>Skript: generate_dashboard.py</em></p>
+      </div>
+    </div>
+    <div class="pipeline-step avoid-break">
+      <div class="pipeline-num">4</div>
+      <div class="pipeline-info">
+        <h4>⚙️ Backtest-Konfiguration (Dry-Run)</h4>
+        <p>Filterung der EAs nach Mindest-Score (Standard: 50) und Ausschluss von Scam-EAs. 
+        Generierung einer JSON-Konfigurationsdatei für den Java-Backtester mit allen qualifizierten 
+        Robotern. <em>Skript: run_batch_backtests.py --dry-run</em></p>
+      </div>
+    </div>
+    <div class="pipeline-step avoid-break">
+      <div class="pipeline-num">5</div>
+      <div class="pipeline-info">
+        <h4>📈 Backtest-Lauf (MT5)</h4>
+        <p>Vollautomatischer Start von MetaTrader 5 Backtests über den Java-Backtester-Adapter. 
+        Alle qualifizierten EAs werden mit ihren empfohlenen Währungspaaren und Timeframes getestet.
+        <em>Skript: run_batch_backtests.py</em></p>
+      </div>
+    </div>
+    <div class="pipeline-step avoid-break">
+      <div class="pipeline-num">6</div>
+      <div class="pipeline-info">
+        <h4>🏆 Ergebnis-Dashboard</h4>
+        <p>Aggregierung aller Backtest-Ergebnisse in eine übersichtliche HTML-Übersicht mit 
+        Performance-Metriken, Ranking und statistischer Auswertung.
+        <em>Skript: generate_backtest_dashboard.py</em></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <h2 class="sub-heading">2.3 Threading-Modell</h2>
+  <p>
+    Eine der technisch anspruchsvollsten Herausforderungen ist das Management von 
+    Concurrency in der GUI. Das System verwendet eine 4-Thread-Architektur:
+  </p>
+
+  <table class="avoid-break">
+    <thead>
+      <tr>
+        <th>Thread-Typ</th>
+        <th>Verantwortlichkeit</th>
+        <th>Technologie</th>
+        <th>Besonderheit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-purple">GUI-Thread</span></td>
+        <td>Zeichnen der Tkinter-Fenster, Reaktion auf Benutzerklicks</td>
+        <td>Tkinter Main Loop</td>
+        <td>Liest alle 100ms die Log-Queue ab (<code>poll_logs()</code>)</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-blue">AsyncLoop-Thread</span></td>
+        <td>Hält den asyncio Event-Loop für Telethon am Leben</td>
+        <td>asyncio, threading</td>
+        <td>Startet beim Programmstart, nimmt Coroutinen per <code>asyncio.run_coroutine_threadsafe()</code> an</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-green">Extraktions-Thread</span></td>
+        <td>Parst JSON-Dateien im Hintergrund (Methode A)</td>
+        <td>threading.Thread</td>
+        <td>Kann gigantische Dateien (mehrere GB) verarbeiten ohne die GUI zu blockieren</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-yellow">2FA-Handshake</span></td>
+        <td>Thread-sichere Eingabe von Login-Codes und Passwörtern</td>
+        <td>threading.Event</td>
+        <td>GUI öffnet modalen Dialog, Hintergrund-Thread wartet blockierend</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout info">
+    <span class="callout-icon">💡</span>
+    <div class="callout-content">
+      <h4>Warum diese Komplexität?</h4>
+      <p>
+        Tkinter ist nicht thread-safe. Alle GUI-Updates müssen im Hauptthread stattfinden. 
+        Gleichzeitig benötigt Telethon (die Telegram-Bibliothek) einen eigenen asyncio Event-Loop. 
+        Die <code>queue.Queue</code> dient als thread-sichere Brücke zwischen beiden Welten.
+      </p>
+    </div>
+  </div>
+
+  <h2 class="sub-heading">2.4 Datenfluss-Diagramm</h2>
+
+  <div class="diagram-wrapper">
+    <div class="diagram-title">📊 Vollständiger Datenfluss</div>
+    <div class="mermaid" id="main-diagram">
+flowchart TD
+    subgraph Input["📥 Phase 1: Dateneingabe"]
+        A["🗂️ Telegram Desktop\nJSON-Export\n(result.json)"]
+        B["📡 Telegram API\nLive-Download\n(Telethon)"]
+        C["🖥️ Tkinter GUI\ntelegram_extractor_gui.py"]
+    end
+
+    subgraph Extract["⚙️ Phase 2: Extraktion & Strukturierung"]
+        D["📄 telegram_extractor.py\nOffline JSON Parser"]
+        E["⚡ telegram_api_downloader.py\nAsync Telethon Client"]
+        F["📁 extracted_data/forex_files/\n.ex4, .ex5, .mq4, .mq5, .set"]
+        G["📝 extracted_data/chat_chunks/\nchat_chunk_001.txt ... N"]
+        H["📊 forex_report.md\nforex_report.csv"]
+    end
+
+    subgraph AI["🤖 Phase 3: KI-Analyse"]
+        I["🧠 extract_ea_details_llm.py\nOpenRouter / Gemini LLM"]
+        J["💾 ea_insights.json\nLLM-Cache"]
+    end
+
+    subgraph Dashboard["📊 Phase 4: Dashboard & DB"]
+        K["⚡ generate_dashboard.py\nSQLite Import + HTML Generator"]
+        L["🗃️ telegram_scraper.db\nSQLite Datenbank"]
+        M["🌐 dashboard.html\nInteraktives Web-Dashboard"]
+    end
+
+    subgraph Backtest["🏦 Phase 5: Backtesting"]
+        N["📋 run_batch_backtests.py\n--dry-run: batch_config.json"]
+        O["⚙️ Java Backtester\nMetaTrader 5 Adapter"]
+        P["📈 generate_backtest_dashboard.py\nErgebnis-Visualisierung"]
+    end
+
+    A --> D
+    B --> E
+    C -.->|steuert| D
+    C -.->|steuert| E
+    D --> F
+    D --> G
+    D --> H
+    E --> F
+    E --> G
+    G --> I
+    I --> J
+    J --> K
+    F --> K
+    K --> L
+    K --> M
+    L --> N
+    N --> O
+    O --> P
+    </div>
+  </div>
+
+  <div class="img-wrapper">
+    <img src="../../../LandingPage_ki-software-schmiede/assets/telegram_scraper_workflow.png" 
+         alt="Dashboard Workflow Screenshot"
+         onerror="this.style.display='none'">
+    <div class="img-caption">
+      Das interaktive Web-Dashboard mit den 6 Prozessschritten – jeder Schritt kann einzeln 
+      gestartet, überwacht und bei Fehler neu gestartet werden
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================
+       SECTION 3: TECH STACK
+  ============================================================ -->
+  <h1 class="section-heading"><span class="sec-num">3</span> Tech-Stack &amp; Bibliotheken</h1>
+
+  <h2 class="sub-heading">3.1 Kern-Technologien</h2>
+
+  <table class="avoid-break">
+    <thead>
+      <tr>
+        <th>Technologie</th>
+        <th>Version</th>
+        <th>Verwendung</th>
+        <th>Kategorie</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Python</strong></td>
+        <td>3.8+</td>
+        <td>Haupt-Programmiersprache für alle Backend-Module</td>
+        <td><span class="badge badge-purple">Core</span></td>
+      </tr>
+      <tr>
+        <td><strong>Tkinter</strong></td>
+        <td>Built-in</td>
+        <td>Desktop-GUI Framework für die Hauptanwendung</td>
+        <td><span class="badge badge-blue">GUI</span></td>
+      </tr>
+      <tr>
+        <td><strong>Telethon</strong></td>
+        <td>≥ 1.24.0</td>
+        <td>Asynchroner Telegram-Client (MTProto-Protokoll-Implementierung)</td>
+        <td><span class="badge badge-green">API</span></td>
+      </tr>
+      <tr>
+        <td><strong>SQLite3</strong></td>
+        <td>Built-in</td>
+        <td>Embedded-Datenbank für EA-Metadaten und Analyse-Ergebnisse</td>
+        <td><span class="badge badge-yellow">Database</span></td>
+      </tr>
+      <tr>
+        <td><strong>Python http.server</strong></td>
+        <td>Built-in</td>
+        <td>ThreadingHTTPServer für das Web-Dashboard auf Port 8000</td>
+        <td><span class="badge badge-gray">Web</span></td>
+      </tr>
+      <tr>
+        <td><strong>Pydantic</strong></td>
+        <td>2.x</td>
+        <td>Datenvalidierung der LLM-Antworten (EAInsights Modell)</td>
+        <td><span class="badge badge-purple">Validation</span></td>
+      </tr>
+      <tr>
+        <td><strong>requests</strong></td>
+        <td>Latest</td>
+        <td>HTTP-Client für OpenRouter API-Aufrufe</td>
+        <td><span class="badge badge-blue">HTTP</span></td>
+      </tr>
+      <tr>
+        <td><strong>threading / asyncio</strong></td>
+        <td>Built-in</td>
+        <td>Multithreading-Framework für non-blocking GUI</td>
+        <td><span class="badge badge-green">Concurrency</span></td>
+      </tr>
+      <tr>
+        <td><strong>subprocess</strong></td>
+        <td>Built-in</td>
+        <td>Starten des Java-Backtesters aus Python heraus</td>
+        <td><span class="badge badge-gray">Process</span></td>
+      </tr>
+      <tr>
+        <td><strong>Java / Maven</strong></td>
+        <td>11+</td>
+        <td>Backtester-Adapter-Projekt (externes Repository)</td>
+        <td><span class="badge badge-red">External</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-heading">3.2 KI &amp; LLM-Integration</h2>
+  <p>
+    Das Herzstück der automatisierten Analyse ist die Integration mit großen Sprachmodellen (LLMs). 
+    Das System unterstützt zwei LLM-Provider über eine vereinheitlichte OpenRouter-Schnittstelle:
+  </p>
+
+  <div class="module-grid">
+    <div class="module-card avoid-break">
+      <div class="module-card-header">
+        <div class="module-icon">🤖</div>
+        <div>
+          <div class="module-name">OpenRouter API</div>
+          <div class="module-file">api.openrouter.ai/v1/chat/completions</div>
+        </div>
+      </div>
+      <div class="module-desc">
+        Aggregator-Service für hunderte KI-Modelle. Standard-Modell: 
+        <code>meta-llama/llama-3.1-8b-instruct</code> – 
+        kosteneffizient ($0,02 / 1M Tokens), stabil, keine aggressiven Rate-Limits.
+        Alternativ kompatibel mit GPT-4o, Claude 3.5, Gemini Pro.
+      </div>
+    </div>
+    <div class="module-card avoid-break">
+      <div class="module-card-header">
+        <div class="module-icon">✨</div>
+        <div>
+          <div class="module-name">Pydantic Schema-Validierung</div>
+          <div class="module-file">EAInsights (BaseModel)</div>
+        </div>
+      </div>
+      <div class="module-desc">
+        Das LLM-Ausgabeformat wird durch ein Pydantic-Datenmodell streng typisiert und validiert. 
+        Robust gegen malformatierte JSON-Antworten durch dreistufigen Fallback-Parser 
+        (direkt → Markdown-Block → Substring-Extraktion).
+      </div>
+    </div>
+  </div>
+
+  <div class="code-block avoid-break">
+    <span class="code-lang">Python</span>
+    <pre><span class="cm"># Pydantic Datenmodell für LLM-Analyse-Ergebnisse</span>
+<span class="kw">class</span> <span class="fn">EAInsights</span>(BaseModel):
+    description: <span class="fn">str</span>  = Field(description=<span class="st">"Kurzbeschreibung des EA (2-3 Sätze, Deutsch)"</span>)
+    timeframes:  <span class="fn">list[str]</span> = Field(description=<span class="st">"Empfohlene Timeframes [M1, M5, M15, H1, H4, D1]"</span>)
+    pairs:       <span class="fn">list[str]</span> = Field(description=<span class="st">"Empfohlene Währungspaare [EURUSD, XAUUSD, ...]"</span>)
+    strategy:    <span class="fn">str</span>  = Field(description=<span class="st">"Strategie (Grid/Martingale, Scalper, Trendfolger)"</span>)
+    risk:        <span class="fn">str</span>  = Field(description=<span class="st">"Risiko: Low / Medium / High / Very High / Extreme"</span>)
+    warnings:    <span class="fn">str</span>  = Field(description=<span class="st">"Kritikpunkte und Community-Warnungen"</span>)</pre>
+  </div>
+
+  <h2 class="sub-heading">3.3 Datenbanken</h2>
+
+  <table class="avoid-break">
+    <thead>
+      <tr>
+        <th>Datenbank / Format</th>
+        <th>Typ</th>
+        <th>Zweck</th>
+        <th>Pfad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>telegram_scraper.db</strong></td>
+        <td><span class="badge badge-purple">SQLite</span></td>
+        <td>Haupt-Datenbank mit robots und robot_comments Tabellen</td>
+        <td><code>data/telegram_scraper.db</code></td>
+      </tr>
+      <tr>
+        <td><strong>ea_insights.json</strong></td>
+        <td><span class="badge badge-blue">JSON Cache</span></td>
+        <td>Persistenter LLM-Analyse-Cache (ermöglicht Resume bei Abbruch)</td>
+        <td><code>extracted_data/ea_insights.json</code></td>
+      </tr>
+      <tr>
+        <td><strong>batch_config.json</strong></td>
+        <td><span class="badge badge-green">JSON Config</span></td>
+        <td>Konfiguration für Batch-Backtest-Läufe (alle qualifizierten EAs)</td>
+        <td><code>batch_config.json</code></td>
+      </tr>
+      <tr>
+        <td><strong>forex_report.csv</strong></td>
+        <td><span class="badge badge-yellow">CSV</span></td>
+        <td>Excel-kompatible Liste aller extrahierten Forex-Dateien mit Kontext</td>
+        <td><code>extracted_data/forex_report.csv</code></td>
+      </tr>
+      <tr>
+        <td><strong>forex_report.md</strong></td>
+        <td><span class="badge badge-gray">Markdown</span></td>
+        <td>Lesbarer Bericht aller gefundenen Dateien mit Absender &amp; Nachricht</td>
+        <td><code>extracted_data/forex_report.md</code></td>
+      </tr>
+      <tr>
+        <td><strong>telegram_scraper.log</strong></td>
+        <td><span class="badge badge-red">Log</span></td>
+        <td>Zentrales Logfile mit Timestamps, GUI-Output und LLM-Analyse-Protokoll</td>
+        <td><code>log/telegram_scraper.log</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================
+       SECTION 4: MODULE DESCRIPTIONS
+  ============================================================ -->
+  <h1 class="section-heading"><span class="sec-num">4</span> Modulbeschreibungen</h1>
+  <p>
+    Das System besteht aus 8 Python-Modulen im <code>src/</code>-Verzeichnis, 
+    die nach dem Prinzip der Einzelverantwortung (Single Responsibility Principle) 
+    strukturiert sind.
+  </p>
+
+  <h2 class="sub-heading">4.1 telegram_extractor_gui.py – Die Hauptanwendung</h2>
+  <div class="callout purple">
+    <span class="callout-icon">🖥️</span>
+    <div class="callout-content">
+      <h4>Größtes Modul: 68 KB – Der Orchestrator</h4>
+      <p>
+        Die grafische Benutzeroberfläche ist der zentrale Einstiegspunkt. 
+        Sie koordiniert alle anderen Module und stellt dem Benutzer eine 
+        benutzerfreundliche Oberfläche zur Verfügung.
+      </p>
+    </div>
+  </div>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Funktion</th><th>Beschreibung</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>TelegramExtractorApp</code></td><td>Haupt-Tkinter-Klasse, verwaltet alle Tabs und den App-Zustand</td></tr>
+      <tr><td><code>AsyncLoopThread</code></td><td>Startet und verwaltet den asyncio Event-Loop für Telethon im Hintergrund</td></tr>
+      <tr><td><code>poll_logs()</code></td><td>Liest alle 100ms Logmeldungen aus der thread-sicheren queue.Queue</td></tr>
+      <tr><td><code>show_code_input_dialog()</code></td><td>Öffnet thread-sicheres modales Fenster für den Telegram-Anmeldecode</td></tr>
+      <tr><td>Auto-Pip-Installer</td><td>Installiert fehlende Abhängigkeiten (z.B. telethon) automatisch per Button-Klick</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-heading">4.2 telegram_extractor.py – Der JSON-Parser (Methode A)</h2>
+  <p>
+    Das Offline-Analyse-Modul. Es verarbeitet rohe JSON-Dateien, die aus Telegram Desktop 
+    exportiert wurden, ohne eine Netzwerkverbindung zu benötigen.
+  </p>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Funktion</th><th>Beschreibung</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>parse_telegram_json()</code></td><td>Hauptfunktion: Liest result.json, iteriert Nachrichten, extrahiert Dateien und generiert Chunks</td></tr>
+      <tr><td><code>clean_text()</code></td><td>Normalisiert das Telegram-Text-Format (String ODER Liste von Objekten) in Plain-Text</td></tr>
+      <tr><td><code>write_chat_chunks()</code></td><td>Teilt den Chatverlauf in 500-Nachrichten-Portionen auf, fügt KI-System-Prompt hinzu</td></tr>
+      <tr><td><code>write_forex_reports()</code></td><td>Generiert den Markdown- und CSV-Bericht aller gefundener Forex-Dateien</td></tr>
+      <tr><td>Kollisionsschutz</td><td>Benennt doppelte Dateien mit Nachrichten-ID um (z.B. <code>default_msg1452.set</code>)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout info">
+    <span class="callout-icon">🔧</span>
+    <div class="callout-content">
+      <h4>Technisches Detail: Telegram Text-Format</h4>
+      <p>
+        Das Telegram-JSON-Format speichert Nachrichtentext entweder als einfachen String oder 
+        als Array von Objekten (für formatierte Texte mit Mentions, Bold, Links). Die Funktion 
+        <code>clean_text()</code> vereinheitlicht beide Formate zu einem einzigen Plain-Text-String.
+      </p>
+    </div>
+  </div>
+
+  <h2 class="sub-heading">4.3 telegram_api_downloader.py – Der Live-Downloader (Methode B)</h2>
+  <p>
+    Der Online-Download-Adapter nutzt das MTProto-Protokoll über die <strong>Telethon</strong>-Bibliothek, 
+    um Chats direkt von den Telegram-Servern herunterzuladen.
+  </p>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Merkmal</th><th>Detail</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Protokoll</td><td>MTProto (offizielles Telegram-Binärprotokoll, verschlüsselt)</td></tr>
+      <tr><td>Download-Reihenfolge</td><td><strong>Chronologisch: Alt → Neu</strong> (für logisch geordnete Chunks)</td></tr>
+      <tr><td>2FA-Handling</td><td>Thread-sicherer Handshake: GUI-Dialog im Main-Thread, Telethon wartet blockierend</td></tr>
+      <tr><td>Chats anzeigen</td><td>Lädt automatisch die letzten 100 Konversationen in die Dropdown-Liste</td></tr>
+      <tr><td>API-Credentials</td><td>Aus GUI, <code>config.local.json</code> oder Umgebungsvariablen; keine echten Zugangsdaten im Code</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warning">
+    <span class="callout-icon">🔐</span>
+    <div class="callout-content">
+      <h4>Wichtig: Session-Datei</h4>
+      <p>
+        Nach der ersten erfolgreichen Anmeldung speichert Telethon eine verschlüsselte 
+        Session-Datei (<code>session_telegram_extractor.session</code>). Diese Datei darf 
+        nicht geteilt werden und wird von der <code>.gitignore</code> ausgeschlossen.
+      </p>
+    </div>
+  </div>
+
+  <h2 class="sub-heading">4.4 extract_ea_details_llm.py – Die KI-Analyse-Engine</h2>
+  <p>
+    Das Kernstück der automatisierten Analyse. Dieses Modul liest die Chat-Chunks, 
+    identifiziert relevante EAs und analysiert sie mit einem LLM.
+  </p>
+
+  <div class="pipeline">
+    <div class="pipeline-step avoid-break">
+      <div class="pipeline-num" style="background:linear-gradient(135deg,#2563eb,#1d4ed8);">①</div>
+      <div class="pipeline-info">
+        <h4>EA-Identifikation</h4>
+        <p>Analysiert Dateinamen aus <code>forex_files/</code> und bereinigt Namen 
+        (entfernt Versionsnummern, generische Begriffe). Sucht nur EAs mit mind. 5 Erwähnungen 
+        im gesamten Chatverlauf.</p>
+      </div>
+    </div>
+    <div class="pipeline-step avoid-break">
+      <div class="pipeline-num" style="background:linear-gradient(135deg,#0891b2,#0e7490);">②</div>
+      <div class="pipeline-info">
+        <h4>Keyword-Multi-Mapping</h4>
+        <p>Jede Nachricht wird gegen alle EA-Keywords geprüft. 
+        Nachrichten, die mehrere EAs erwähnen, werden allen betroffenen EAs zugeordnet. 
+        Optimierung: einmalige Lowercase-Konvertierung aller Nachrichten statt 89M Aufrufe.</p>
+      </div>
+    </div>
+    <div class="pipeline-step avoid-break">
+      <div class="pipeline-num" style="background:linear-gradient(135deg,#059669,#047857);">③</div>
+      <div class="pipeline-info">
+        <h4>Batch LLM-Synthese</h4>
+        <p>Für jeden EA: Sammlung der letzten 35 Postings, Zusammenführung zu einem 
+        einzigen Kontext-Block, Senden an OpenRouter API. Temperature: 0.2 (deterministisch, 
+        strukturiert). Rate-Limiting: 4,5 Sekunden Pause zwischen Anfragen (15 RPM max).</p>
+      </div>
+    </div>
+    <div class="pipeline-step avoid-break">
+      <div class="pipeline-num" style="background:linear-gradient(135deg,#d97706,#b45309);">④</div>
+      <div class="pipeline-info">
+        <h4>Inkrementeller Cache</h4>
+        <p>Nach jeder erfolgreichen LLM-Antwort wird das Ergebnis sofort in 
+        <code>ea_insights.json</code> gespeichert. Bei Neustart wird der Cache geladen und 
+        die Verarbeitung genau am nächsten unanalysierten EA fortgesetzt.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <h2 class="sub-heading">4.5 generate_dashboard.py &amp; dashboard_server.py</h2>
+
+  <div class="img-row">
+    <div class="img-wrapper">
+      <img src="../../../LandingPage_ki-software-schmiede/assets/telegram_scraper_catalog.png" 
+           alt="Dashboard Catalog View"
+           onerror="this.style.display='none'">
+      <div class="img-caption">EA-Katalog mit Score, Strategie und Risiko-Rating</div>
+    </div>
+    <div class="img-wrapper">
+      <img src="../../../LandingPage_ki-software-schmiede/assets/telegram_scraper_cache.png" 
+           alt="LLM Cache Details Modal"
+           onerror="this.style.display='none'">
+      <div class="img-caption">LLM-Analyse Modal: Timeframes, Pairs, Warnungen</div>
+    </div>
+  </div>
+
+  <p>
+    Das Dashboard-System besteht aus zwei eng verzahnten Modulen:
+  </p>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Aspekt</th><th>generate_dashboard.py</th><th>dashboard_server.py</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Funktion</strong></td><td>SQLite-Import, HTML-Generierung</td><td>HTTP-Server, API-Endpunkte</td></tr>
+      <tr><td><strong>Server-Typ</strong></td><td>–</td><td>ThreadingHTTPServer (Port 8000)</td></tr>
+      <tr><td><strong>Wichtige API-Endpunkte</strong></td><td>–</td><td>/api/stats, /api/pipeline/run, /api/pipeline/state, /api/pipeline/logs</td></tr>
+      <tr><td><strong>Besonderheit</strong></td><td>Importiert ea_insights.json in SQLite</td><td>Lock-Release vor I/O (Deadlock-Prävention)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout danger">
+    <span class="callout-icon">⚠️</span>
+    <div class="callout-content">
+      <h4>Kritisch: Lock-Release vor I/O</h4>
+      <p>
+        Alle HTTP-Responses und Netzwerk-Calls dürfen NICHT innerhalb einer 
+        <code>pipeline_lock</code>-Sperre stattfinden. Daten müssen zuerst aus dem Lock 
+        kopiert, der Lock freigegeben und erst dann der HTTP-Response geschrieben werden. 
+        Sonst entsteht ein UI/Backend-Deadlock.
+      </p>
+    </div>
+  </div>
+
+  <h2 class="sub-heading">4.6 run_batch_backtests.py – Automatisches Backtesting</h2>
+  <p>
+    Dieses Modul liest die EA-Daten aus dem generierten Dashboard, filtert qualifizierte 
+    EAs nach Score und verfügbaren Dateien und startet automatisch Backtests über den 
+    Java-Backtester-Adapter.
+  </p>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Parameter</th><th>Standard</th><th>Beschreibung</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>--min-score</code></td><td>50</td><td>Mindest-Score im Dashboard (0-100)</td></tr>
+      <tr><td><code>--from-date</code></td><td>2025-01-01</td><td>Backtest-Startdatum</td></tr>
+      <tr><td><code>--to-date</code></td><td>2026-06-01</td><td>Backtest-Enddatum</td></tr>
+      <tr><td><code>--model</code></td><td>1 (1m OHLC)</td><td>Tick-Modell: 0=Every tick, 1=1m OHLC, 2=Open price, 4=Real ticks</td></tr>
+      <tr><td><code>--dry-run</code></td><td>–</td><td>Nur Konfigurationsdatei erstellen, keinen Backtest starten</td></tr>
+      <tr><td><code>--limit</code></td><td>None</td><td>Max. Anzahl der zu testenden Roboter (für Test-Runs)</td></tr>
+    </tbody>
+  </table>
+
+  <p>Unterstützte Symbole für automatische Erkennung:</p>
+  <div class="code-block avoid-break">
+    <span class="code-lang">Python</span>
+    <pre><span class="cm"># Alle im Java-Backtester unterstützten Symbole</span>
+SUPPORTED_SYMBOLS = [
+    <span class="st">"AUDCAD"</span>, <span class="st">"AUDCHF"</span>, <span class="st">"AUDJPY"</span>, <span class="st">"AUDNZD"</span>, <span class="st">"AUDUSD"</span>,
+    <span class="st">"CADCHF"</span>, <span class="st">"CADJPY"</span>, <span class="st">"EURAUD"</span>, <span class="st">"EURCHF"</span>, <span class="st">"EURGBP"</span>,
+    <span class="st">"EURJPY"</span>, <span class="st">"EURUSD"</span>, <span class="st">"GBPCHF"</span>, <span class="st">"GBPJPY"</span>, <span class="st">"GBPUSD"</span>,
+    <span class="st">"NZDJPY"</span>, <span class="st">"NZDUSD"</span>, <span class="st">"USDCAD"</span>, <span class="st">"USDCHF"</span>, <span class="st">"USDJPY"</span>,
+    <span class="st">"XAGUSD"</span>, <span class="st">"XAUUSD"</span>, <span class="st">"XTIUSD"</span>  <span class="cm"># Gold, Silber, Öl</span>
+]</pre>
+  </div>
+
+  <h2 class="sub-heading">4.7 analyze_organize.py – Die KI-Subroutine</h2>
+  <p>
+    Die Katalogisierungs-Subroutine liest den <code>ROBOTS_CONFIG</code>-Dictionary 
+    (eine manuelle Konfiguration der wichtigsten bekannten EAs) und ordnet die 
+    entsprechenden Dateien in strukturierte Verzeichnisse ein.
+  </p>
+
+  <div class="code-block avoid-break">
+    <span class="code-lang">Python – ROBOTS_CONFIG Struktur</span>
+    <pre><span class="cm"># Beispiel-Eintrag in analyze_organize.py</span>
+ROBOTS_CONFIG = {
+    <span class="st">"Waka_Waka"</span>: {
+        <span class="st">"files"</span>:    [<span class="st">"WakaWaka.ex5"</span>, <span class="st">"Waka_Waka_v4.ex4"</span>],
+        <span class="st">"settings"</span>: [<span class="st">"WakaWaka_EURUSD.set"</span>],
+        <span class="st">"description"</span>: <span class="st">"""# Handbuch: Waka Waka EA
+## Beschreibung
+Grid-basierter EA mit automatischer Martingale-Progression...
+## Empfohlene Einstellungen
+* Währungspaar: EURUSD, XAUUSD
+* Timeframe: M15
+## Risikomanagement
+* Risiko-Rating: 🔴 Hoch"""</span>
+    }
+}</pre>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================
+       SECTION 5: PROMPTS
+  ============================================================ -->
+  <h1 class="section-heading"><span class="sec-num">5</span> Verwendete Prompts</h1>
+  <p>
+    Das System verwendet mehrere Prompt-Strategien, um KI-Modelle optimal zu nutzen.
+    Alle Prompts sind auf Struktur und Determinismus ausgelegt.
+  </p>
+
+  <h2 class="sub-heading">5.1 Chat-Chunk System-Prompt</h2>
+  <p>
+    Jeder Chat-Chunk beginnt mit einem eingebetteten System-Prompt, der dem Analysten 
+    (Mensch oder KI) sofort erklärt, was zu tun ist. Dadurch kann der Chunk direkt 
+    in ein KI-Tool eingefügt werden.
+  </p>
+
+  <div class="prompt-box avoid-break">
+    <div class="prompt-header">
+      <span class="prompt-label">📝 System-Prompt (Eingebettet in chat_chunk_XXX.txt)</span>
+    </div>
+    <div class="prompt-text"><span class="prompt-highlight">========================================================================
+TELEGRAM CHAT EXPORT - CHUNK {i+1} VON {num_chunks}
+Chat-Name: {chat_name}
+Zeitraum: {start_date} bis {end_date}
+Nachrichten in diesem Teil: {len(chunk_msgs)} (Nachricht #{start_idx+1} bis #{end_idx})
+========================================================================
+HINWEIS FÜR DIE KI-ANALYSE:
+Analysiere diesen Chat-Auszug. Beachte besonders Diskussionen über Forex-Roboter (EAs),
+Strategien, .set-Einstellungsdateien, Backtest-Ergebnisse oder Fragen der Nutzer.
+Jede Nachricht ist wie folgt formatiert: [ID] | [Datum] | [Absender]: Text
+========================================================================</span>
+
+[1452] | [2026-06-04T16:45:00] | Max Mustermann:
+Hier ist die neue Version des Gold-EAs!
+[Angehängte Forex-Datei: Gold_Pure_V1.ex5]
+----------------------------------------
+[1453] | [2026-06-04T16:46:00] | Sandra K.:
+Habe es getestet! XAUUSD M15 läuft gut. Drawdown war maximal 8%.
+----------------------------------------</div>
+  </div>
+
+  <h2 class="sub-heading">5.2 LLM Analyse-Prompt (OpenRouter)</h2>
+  <p>
+    Der eigentliche LLM-Prompt für die automatische EA-Analyse ist präzise strukturiert, 
+    um deterministisch ein valides JSON zurückzubekommen.
+  </p>
+
+  <div class="prompt-box avoid-break">
+    <div class="prompt-header">
+      <span class="prompt-label">🤖 LLM Analyse-Prompt (extract_ea_details_llm.py)</span>
+    </div>
+    <div class="prompt-text"><span class="prompt-highlight">Du bist ein erfahrener Handelsroboter-Experte (Forex EAs).</span>
+Analysiere die folgenden echten Telegram-Chatlogs über den EA '<span class="prompt-var">{ea_name}</span>'.
+Die Community diskutiert darin über Setups, Einstellungen und Ergebnisse.
+Antworte AUSSCHLIESSLICH mit einem einzigen, validen JSON-Objekt im folgenden Format:
+
+<span class="prompt-json">{
+  "description": "Kurzbeschreibung des EA (2-3 Sätze in Deutsch, basierend auf Community-Meinungen)",
+  "timeframes": ["M1", "M15"],
+  "pairs": ["EURUSD", "GBPUSD"],
+  "strategy": "Strategie-Bezeichnung (z.B. Grid / Martingale)",
+  "risk": "Risiko-Einschätzung (z.B. Low, Medium, High)",
+  "warnings": "Kritikpunkte, Risiken oder Warnungen"
+}</span>
+
+Achtung bei Währungspaaren und Timeframes:
+- Ziehe nur Währungspaare und Zeiteinheiten heraus, die <span class="prompt-highlight">explizit</span> empfohlen werden.
+- Fasse das Feedback kurz in einer verständlichen deutschen Beschreibung zusammen.
+- Falls keine Zeiteinheiten oder Paare genannt werden, trage "Keine Nennung" ein.
+
+[CHATLOGS START]
+<span class="prompt-var">{postings_text}</span>  ← bis zu 35 gefilterte und gereinigte Postings
+[CHATLOGS ENDE]</div>
+  </div>
+
+  <div class="callout info">
+    <span class="callout-icon">🎯</span>
+    <div class="callout-content">
+      <h4>Prompt-Design-Prinzipien</h4>
+      <p>
+        <strong>Temperature 0.2:</strong> Niedrig für maximale Konsistenz und strukturierte Ausgabe. |
+        <strong>Rollendefinition:</strong> "Handelsroboter-Experte" führt zu besseren Fachbegriffen. |
+        <strong>Negativ-Beispiel:</strong> "AUSSCHLIESSLICH JSON" verhindert Prosa-Antworten. |
+        <strong>Fallback-Parser:</strong> Dreistufig (direkt → Markdown-Block → Substring).
+      </p>
+    </div>
+  </div>
+
+  <h2 class="sub-heading">5.3 Subroutinen-Prompt (für KI-Agenten)</h2>
+  <p>
+    Die Datei <code>prompts/sammleGuteRobotsPrompt.txt</code> enthält einen Prompt, 
+    der einem KI-Agenten die komplette Subroutine übergeben kann:
+  </p>
+
+  <div class="prompt-box avoid-break">
+    <div class="prompt-header">
+      <span class="prompt-label">📋 Subroutinen-Prompt (prompts/sammleGuteRobotsPrompt.txt)</span>
+    </div>
+    <div class="prompt-text">Führe die Analyse- und Organisations-Subroutine gemäß den Anweisungen 
+in der Datei <span class="prompt-var">report/subroutine_instruction.md</span> aus: 
+Lese dazu die neuen Chat-Chunks in <span class="prompt-var">extracted_data/chat_chunks/</span>, 
+identifiziere die von Usern positiv bewerteten EAs, 
+gleiche sie mit den Dateien in <span class="prompt-var">extracted_data/forex_files/</span> ab, 
+aktualisiere das Skript <span class="prompt-var">src/analyze_organize.py</span> und führe es aus.</div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================
+       SECTION 6: INSTALLATION
+  ============================================================ -->
+  <h1 class="section-heading"><span class="sec-num">6</span> Installationsanleitung</h1>
+
+  <h2 class="sub-heading">6.1 Systemvoraussetzungen</h2>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Anforderung</th><th>Mindestversion</th><th>Empfehlung</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Betriebssystem</td>
+        <td>Windows 10</td>
+        <td>Windows 11</td>
+        <td><span class="badge badge-green">Erforderlich</span></td>
+      </tr>
+      <tr>
+        <td>Python</td>
+        <td>3.8</td>
+        <td>3.11 oder neuer</td>
+        <td><span class="badge badge-green">Erforderlich</span></td>
+      </tr>
+      <tr>
+        <td>Python in PATH</td>
+        <td>–</td>
+        <td>Bei Installation aktivieren</td>
+        <td><span class="badge badge-red">Kritisch</span></td>
+      </tr>
+      <tr>
+        <td>Java JDK</td>
+        <td>11</td>
+        <td>21 LTS</td>
+        <td><span class="badge badge-yellow">Für Backtesting</span></td>
+      </tr>
+      <tr>
+        <td>MetaTrader 5</td>
+        <td>Aktuell</td>
+        <td>–</td>
+        <td><span class="badge badge-yellow">Für Backtesting</span></td>
+      </tr>
+      <tr>
+        <td>OpenRouter API-Key</td>
+        <td>–</td>
+        <td>Kostenlose Registrierung</td>
+        <td><span class="badge badge-yellow">Für LLM-Analyse</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-heading">6.2 Installation Schritt-für-Schritt</h2>
+
+  <div class="pipeline">
+    <div class="pipeline-step avoid-break">
+      <div class="pipeline-num">1</div>
+      <div class="pipeline-info">
+        <h4>Projektordner herunterladen</h4>
+        <p>Laden Sie das Projektarchiv herunter und entpacken Sie es in einen Ordner Ihrer Wahl, 
+        z.B. <code>C:\TelegramScraper\</code>. Alternativ klonen Sie das Git-Repository.</p>
+      </div>
+    </div>
+    <div class="pipeline-step avoid-break">
+      <div class="pipeline-num">2</div>
+      <div class="pipeline-info">
+        <h4>Python installieren</h4>
+        <p>Laden Sie Python 3.11 von <strong>python.org</strong> herunter. 
+        Aktivieren Sie bei der Installation: <strong>"Add Python to PATH"</strong> (⚠️ Pflicht!).
+        Prüfen Sie die Installation: <code>python --version</code></p>
+      </div>
+    </div>
+    <div class="pipeline-step avoid-break">
+      <div class="pipeline-num">3</div>
+      <div class="pipeline-info">
+        <h4>Abhängigkeiten installieren</h4>
+        <p>Öffnen Sie eine Konsole im Projektordner und führen Sie aus:<br>
+        <code>pip install -r requirements.txt</code><br>
+        oder alternativ: <code>pip install telethon pydantic requests google-generativeai</code></p>
+      </div>
+    </div>
+    <div class="pipeline-step avoid-break">
+      <div class="pipeline-num">4</div>
+      <div class="pipeline-info">
+        <h4>Anwendung starten</h4>
+        <p>Doppelklick auf <strong>start.bat</strong> für die Desktop-GUI, oder<br>
+        Doppelklick auf <strong>start_dashboard.bat</strong> für das Web-Dashboard.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sub-heading">6.3 Konfiguration</h2>
+  <p>
+    Die Konfiguration erfolgt über eine lokale Datei <code>config.local.json</code> 
+    im Projektroot, die nicht in das Git-Repository eingecheckt wird (in <code>.gitignore</code>):
+  </p>
+
+  <div class="code-block avoid-break">
+    <span class="code-lang">JSON – config.local.json</span>
+    <pre>{
+  <span class="fn">"openrouter_api_key"</span>: <span class="st">"openrouter-api-key-here"</span>,
+  <span class="fn">"openrouter_model"</span>:   <span class="st">"meta-llama/llama-3.1-8b-instruct"</span>
+}</pre>
+  </div>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Einstellung</th><th>Beschreibung</th><th>Standard</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>openrouter_api_key</code></td>
+        <td>API-Key von openrouter.ai (kostenlose Registrierung möglich)</td>
+        <td><em>Keiner</em></td>
+      </tr>
+      <tr>
+        <td><code>openrouter_model</code></td>
+        <td>LLM-Modell für die Analyse. Empfehlung: meta-llama/llama-3.1-8b-instruct</td>
+        <td><code>meta-llama/llama-3.1-8b-instruct</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout info">
+    <span class="callout-icon">💡</span>
+    <div class="callout-content">
+      <h4>Alternativer Modell-Tipp</h4>
+      <p>
+        Das Standard-Modell <code>meta-llama/llama-3.1-8b-instruct</code> ist 
+        <strong>kosteneffizient ($0,02/1M Tokens)</strong> und stabil. 
+        Für bessere Analyse-Qualität: <code>anthropic/claude-3.5-sonnet</code> oder 
+        <code>google/gemini-flash-1.5</code>. API-Key wird alternativ auch aus 
+        der Umgebungsvariable <code>OPENROUTER_API_KEY</code> gelesen.
+      </p>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================
+       SECTION 7: USER MANUAL
+  ============================================================ -->
+  <h1 class="section-heading"><span class="sec-num">7</span> Bedienungsanleitung</h1>
+
+  <h2 class="sub-heading">7.1 Methode A: Offline JSON-Export</h2>
+  <p>
+    Die sicherste Methode – keine Telegram-Anmeldung im Programm erforderlich, 
+    kein Internetzugang während der Extraktion notwendig.
+  </p>
+
+  <h3 class="subsub-heading">Schritt 1: Export aus Telegram Desktop erstellen</h3>
+  <ol style="margin-left: 20px; color: #374151; font-size: 12px; line-height: 2; margin-bottom: 12px;">
+    <li>Öffnen Sie <strong>Telegram Desktop</strong> auf Ihrem PC</li>
+    <li>Navigieren Sie zum gewünschten Chat oder Kanal</li>
+    <li>Klicken Sie auf die <strong>drei Punkte (⋮)</strong> oben rechts → "Chatverlauf exportieren"</li>
+    <li><strong>⚠️ Wichtig:</strong> Format von "HTML" auf <strong>"JSON"</strong> umstellen!</li>
+    <li>Kontrollkästchen <strong>"Dateien"</strong> aktivieren</li>
+    <li>Größenlimit-Regler ganz nach rechts (mind. 2000 MB oder unbegrenzt)</li>
+    <li>Auf <strong>"Exportieren"</strong> klicken und abwarten</li>
+  </ol>
+
+  <div class="callout warning">
+    <span class="callout-icon">⚠️</span>
+    <div class="callout-content">
+      <h4>Format JSON, nicht HTML!</h4>
+      <p>
+        Das Programm kann ausschließlich JSON-Exporte verarbeiten. 
+        Das Standard-Format von Telegram Desktop ist HTML – diese Einstellung 
+        <strong>muss</strong> vor dem Export auf JSON geändert werden.
+      </p>
+    </div>
+  </div>
+
+  <h3 class="subsub-heading">Schritt 2: Extraktion in der GUI starten</h3>
+  <ol style="margin-left: 20px; color: #374151; font-size: 12px; line-height: 2; margin-bottom: 12px;">
+    <li>Doppelklick auf <strong>start.bat</strong></li>
+    <li>Reiter <strong>"Methode A: JSON-Export Parser (Offline)"</strong> wählen</li>
+    <li>Auf <strong>"Suchen..."</strong> klicken → Datei <code>result.json</code> aus dem Export-Ordner auswählen</li>
+    <li>Ausgabeordner festlegen (Standard: <code>extracted_data</code>)</li>
+    <li>Auf <strong>"Extraktion starten"</strong> klicken</li>
+    <li>Fortschritt in der Konsole am unteren Fensterrand verfolgen</li>
+  </ol>
+
+  <h2 class="sub-heading">7.2 Methode B: Live-Download via Telegram API</h2>
+
+  <div class="callout danger">
+    <span class="callout-icon">🔐</span>
+    <div class="callout-content">
+      <h4>Sicherheitshinweis</h4>
+      <p>
+        Diese Methode erfordert Ihre Telegram-Telefonnummer und den Empfang eines Anmeldecodes. 
+        Stellen Sie sicher, dass Sie das Programm nur aus vertrauenswürdigen Quellen 
+        heruntergeladen haben. Geben Sie niemals Ihren Anmeldecode an Dritte weiter.
+      </p>
+    </div>
+  </div>
+
+  <ol style="margin-left: 20px; color: #374151; font-size: 12px; line-height: 2; margin-bottom: 12px;">
+    <li>Reiter <strong>"Methode B: Direkt-Download (API Online)"</strong> öffnen</li>
+    <li>Programm prüft automatisch ob Telethon installiert ist. Falls nicht: Button <strong>"Telethon jetzt via Pip installieren"</strong> klicken</li>
+    <li>Telefonnummer im Format <code>+491701234567</code> eingeben</li>
+    <li>Button <strong>"1. Anmelden &amp; Chats laden"</strong> klicken</li>
+    <li>Im Popup-Dialog den <strong>Bestätigungscode</strong> eingeben, den Sie in Telegram erhalten haben</li>
+    <li>(Falls 2FA aktiv: Im zweiten Dialog Ihr Cloud-Passwort eingeben)</li>
+    <li>Chat aus der Dropdown-Liste auswählen (zeigt Ihre letzten 100 Chats)</li>
+    <li>Button <strong>"2. Download &amp; Extraktion starten"</strong> klicken</li>
+  </ol>
+
+  <h2 class="sub-heading">7.3 Das Web-Dashboard starten</h2>
+  <ol style="margin-left: 20px; color: #374151; font-size: 12px; line-height: 2; margin-bottom: 12px;">
+    <li>Doppelklick auf <strong>start_dashboard.bat</strong></li>
+    <li>Das Skript prüft automatisch, ob ein neuerer Dateistand vorliegt (intelligentes Rebuild-Check)</li>
+    <li>Falls nötig: Dashboard-Daten werden automatisch neu generiert</li>
+    <li>Browser öffnet sich mit <strong>http://localhost:8000/report/dashboard.html</strong></li>
+    <li>Die 6 Pipeline-Schritte können im Dashboard einzeln oder komplett ausgeführt werden</li>
+  </ol>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Ausgabedatei</th><th>Beschreibung</th><th>Pfad</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>forex_files/</code></td><td>Alle kopierten EA-Dateien (.ex4, .ex5, .mq4, .mq5, .set)</td><td><code>extracted_data/forex_files/</code></td></tr>
+      <tr><td><code>chat_chunks/</code></td><td>KI-optimierte 500-Nachrichten-Portionen als .txt</td><td><code>extracted_data/chat_chunks/</code></td></tr>
+      <tr><td><code>forex_report.md</code></td><td>Übersichtlicher Markdown-Bericht aller Dateien</td><td><code>extracted_data/</code></td></tr>
+      <tr><td><code>forex_report.csv</code></td><td>Excel-kompatible Tabelle (Semikolon-separiert, UTF-8)</td><td><code>extracted_data/</code></td></tr>
+      <tr><td><code>ea_insights.json</code></td><td>LLM-Analyse-Ergebnisse (nach Schritt 2)</td><td><code>extracted_data/</code></td></tr>
+      <tr><td><code>dashboard.html</code></td><td>Interaktives Web-Dashboard (nach Schritt 3)</td><td><code>report/</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================
+       SECTION 8: DATABASE
+  ============================================================ -->
+  <h1 class="section-heading"><span class="sec-num">8</span> Datenbank-Dokumentation</h1>
+
+  <h2 class="sub-heading">8.1 SQLite-Datenbankschema</h2>
+  <p>
+    Die Haupt-Datenbank <code>data/telegram_scraper.db</code> verwendet SQLite 
+    und speichert alle analysierten EA-Daten in zwei Tabellen:
+  </p>
+
+  <div class="diagram-wrapper">
+    <div class="diagram-title">🗃️ Datenbankschema (ERD)</div>
+    <div class="mermaid">
+erDiagram
+    robots {
+        TEXT id PK "EA-Bezeichner (z.B. waka_waka)"
+        TEXT name "Anzeigename"
+        TEXT description "LLM-generierte Kurzbeschreibung"
+        TEXT strategy "Strategie (Grid, Scalper, etc.)"
+        TEXT risk "Risikoeinstufung"
+        TEXT warnings "Community-Warnungen"
+        TEXT timeframes "Empfohlene Timeframes (JSON)"
+        TEXT pairs "Empfohlene Währungspaare (JSON)"
+        INTEGER mentions "Anzahl Erwähnungen im Chat"
+        INTEGER score "Berechneter Score (0-100)"
+        TIMESTAMP created_at "Erstellungszeitpunkt"
+    }
+    robot_comments {
+        INTEGER id PK "Auto-Increment"
+        TEXT robot_id FK "Referenz auf robots.id"
+        TEXT comment "Originaler Chat-Kommentar"
+        TIMESTAMP posted_at "Posting-Zeitstempel"
+    }
+    robots ||--o{ robot_comments : "hat"
+    </div>
+  </div>
+
+  <h2 class="sub-heading">8.2 Interne Datenstruktur (pro Nachricht)</h2>
+  <p>
+    Alle Parser (JSON-Parser und API-Downloader) transformieren Telegram-Nachrichten 
+    in eine einheitliche interne Struktur:
+  </p>
+
+  <div class="code-block avoid-break">
+    <span class="code-lang">JSON – Interne Nachrichtenstruktur</span>
+    <pre>{
+  <span class="fn">"id"</span>:            <span class="nu">1452</span>,
+  <span class="fn">"date"</span>:          <span class="st">"2026-06-04T16:45:00"</span>,
+  <span class="fn">"sender"</span>:        <span class="st">"Max Mustermann"</span>,
+  <span class="fn">"text"</span>:          <span class="st">"Hier ist die neue Version des Gold-EAs!"</span>,
+  <span class="fn">"attached_file"</span>: <span class="st">"Gold_Pure_V1.ex5"</span>  <span class="cm">// null wenn kein Anhang</span>
+}</pre>
+  </div>
+
+  <h2 class="sub-heading">8.3 Score-Berechnung</h2>
+  <p>
+    Der Score pro EA (0-100) wird bei der Dashboard-Generierung berechnet und 
+    berücksichtigt mehrere Faktoren:
+  </p>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Faktor</th><th>Gewichtung</th><th>Beschreibung</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Erwähnungen (mentions)</td><td>40%</td><td>Anzahl der Chat-Nennungen (normalisiert auf 100)</td></tr>
+      <tr><td>Risiko-Rating</td><td>30%</td><td>Low=30, Medium=20, High=10, Very High=5, Extreme=0</td></tr>
+      <tr><td>Vorhandene Dateien</td><td>20%</td><td>+20 wenn .ex5/.ex4 gefunden, +5 wenn .set vorhanden</td></tr>
+      <tr><td>Community-Sentiment</td><td>10%</td><td>Positiver Ton in den analysierten Postings</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================
+       SECTION 9: FOREX FILE TYPES
+  ============================================================ -->
+  <h1 class="section-heading"><span class="sec-num">9</span> Forex-Dateitypen &amp; MetaTrader</h1>
+
+  <p>
+    Die extrahierten Dateien sind für die MetaTrader-Handelsplattform (MT4/MT5) bestimmt. 
+    Ein Verständnis der Dateitypen ist wichtig für die korrekte Verwendung.
+  </p>
+
+  <table class="avoid-break">
+    <thead>
+      <tr>
+        <th>Dateiendung</th>
+        <th>Beschreibung</th>
+        <th>Plattform</th>
+        <th>Editierbar?</th>
+        <th>Zweck</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-purple">.mq4</span></td>
+        <td>MetaQuotes Language 4 – Quellcode</td>
+        <td>MT4</td>
+        <td>✅ Ja (MetaEditor)</td>
+        <td>Lesbarer EA/Indikator-Code. Extrem wertvoll zum Lernen und Anpassen.</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-purple">.mq5</span></td>
+        <td>MetaQuotes Language 5 – Quellcode</td>
+        <td>MT5</td>
+        <td>✅ Ja (MetaEditor)</td>
+        <td>Lesbarer Code für MT5. Modernere Sprache als MQL4.</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-blue">.ex4</span></td>
+        <td>Kompilierter Expert Advisor / Indikator</td>
+        <td>MT4</td>
+        <td>❌ Nein</td>
+        <td>Ausführbares Programm. Direkt ladbar über MT4-Navigator. Kann nicht eingesehen werden.</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-blue">.ex5</span></td>
+        <td>Kompilierter Expert Advisor</td>
+        <td>MT5</td>
+        <td>❌ Nein</td>
+        <td>Ausführbares MT5-Programm. Standard für modernen automatisierten Handel.</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-green">.set</span></td>
+        <td>Expert Advisor Einstellungsdatei</td>
+        <td>MT4 &amp; MT5</td>
+        <td>✅ Ja (Texteditor)</td>
+        <td>Parameter-Preset: Risikogrößen, Indikator-Perioden, Handelszeiten. Kann geladen/gespeichert werden.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout purple">
+    <span class="callout-icon">📁</span>
+    <div class="callout-content">
+      <h4>Wo EA-Dateien in MetaTrader installieren?</h4>
+      <p>
+        <strong>MT5:</strong> <code>MQL5\Experts\</code> (Navigator → Expert Advisors → Rechtklick → Öffne Ordner)<br>
+        <strong>.set-Dateien:</strong> Im EA-Eingabedialog → "Load" → Datei auswählen<br>
+        <strong>Nach Installation:</strong> MT5 neu starten oder F4 drücken (Compiler)
+      </p>
+    </div>
+  </div>
+
+  <h3 class="subsub-heading">Risiko-Bewertungsskala</h3>
+  <p>Die LLM-Analyse bewertet jeden EA auf einer 5-stufigen Skala:</p>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Rating</th><th>Symbol</th><th>Bedeutung</th><th>Empfehlung</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Low</td>
+        <td>🟢</td>
+        <td>Konservative Strategie, kleiner Drawdown, keine Martingale</td>
+        <td>Geeignet für Live-Konto</td>
+      </tr>
+      <tr>
+        <td>Medium</td>
+        <td>🟡</td>
+        <td>Moderates Risiko, gelegentliche Hochs im Drawdown</td>
+        <td>Kleinere Positionsgrößen empfohlen</td>
+      </tr>
+      <tr>
+        <td>High</td>
+        <td>🟠</td>
+        <td>Aggressive Strategie, Martingale-Elemente möglich</td>
+        <td>Nur mit risikoadjustiertem Lot-Size</td>
+      </tr>
+      <tr>
+        <td>Very High</td>
+        <td>🔴</td>
+        <td>Stark risikoreich, hohe Drawdown-Phasen bekannt</td>
+        <td>Nur Demokonto oder separiertes Risikokapital</td>
+      </tr>
+      <tr>
+        <td>Extreme</td>
+        <td>⚠️</td>
+        <td>Extreme Risikostrategie oder Community-Warnungen vor Scam</td>
+        <td>Finger weg! Nur zu Analysezwecken</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================
+       SECTION 10: AI WORKFLOW / CHUNKING
+  ============================================================ -->
+  <h1 class="section-heading"><span class="sec-num">10</span> KI-Workflow: Chunking &amp; LLM-Analyse</h1>
+
+  <h2 class="sub-heading">10.1 Das "Lost in the Middle"-Problem</h2>
+  <p>
+    Moderne KI-Sprachmodelle haben zwar wachsende Kontextfenster (teils über 1 Million Tokens), 
+    neigen aber dazu, Informationen in der Mitte langer Dokumente zu übersehen. 
+    Dieses Phänomen wird als <strong>"Lost in the Middle"</strong> bezeichnet.
+  </p>
+
+  <div class="diagram-wrapper">
+    <div class="diagram-title">📊 Warum 500 Nachrichten pro Chunk?</div>
+    <div class="mermaid">
+graph LR
+    A["❌ 1 Riesen-Chunk\n200.000 Nachrichten\n→ Wichtige Details\n   werden übersehen"] 
+    B["✅ 400 kleine Chunks\n500 Nachrichten each\n→ Vollständige Analyse\n   pro Chunk möglich"]
+    C["⚖️ Optimum gefunden!\n500 Msg = ~15-20k Tokens\nKlein genug für Fokus\nGroß genug für Kontext"]
+    
+    A -->|"Lost in the Middle-Problem"| C
+    B -->|"Bewährte Praxis"| C
+    </div>
+  </div>
+
+  <h2 class="sub-heading">10.2 Der Chunking-Prozess im Detail</h2>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Parameter</th><th>Wert</th><th>Begründung</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Chunk-Größe</td>
+        <td><strong>500 Nachrichten</strong></td>
+        <td>Optimaler Kompromiss: Vollständig analysierbar, Kontext über mehrere Stunden erhalten</td>
+      </tr>
+      <tr>
+        <td>Reihenfolge</td>
+        <td>Chronologisch (Alt → Neu)</td>
+        <td>Diskussions-Kontext bleibt erhalten (Antworten folgen auf Fragen)</td>
+      </tr>
+      <tr>
+        <td>Vorspann</td>
+        <td>System-Prompt in jeder Datei</td>
+        <td>Chunk kann direkt in KI-Tool eingefügt werden, ohne Erklärung</td>
+      </tr>
+      <tr>
+        <td>Format</td>
+        <td>[ID] | [Datum] | [Absender]: Text</td>
+        <td>Maschinenlesbar UND menschenlesbar, Zeitstempel für Kontext</td>
+      </tr>
+      <tr>
+        <td>Dateinamen</td>
+        <td><code>chat_chunk_001.txt</code> ... <code>chat_chunk_400.txt</code></td>
+        <td>Numerisch sortierbar, einfach iterierbar</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-heading">10.3 LLM-Analyse Performance-Optimierungen</h2>
+
+  <div class="module-grid">
+    <div class="module-card avoid-break">
+      <div class="module-card-header">
+        <div class="module-icon">⚡</div>
+        <div>
+          <div class="module-name">Einmalige Lowercase-Konvertierung</div>
+        </div>
+      </div>
+      <div class="module-desc">
+        Alle Nachrichten werden einmalig in Kleinbuchstaben konvertiert und als Tupel gespeichert 
+        <code>(original, lowercase)</code>. Das verhindert bei 463 EAs × 192.000 Nachrichten 
+        <strong>89 Millionen</strong> redundante <code>.lower()</code>-Aufrufe.
+      </div>
+    </div>
+    <div class="module-card avoid-break">
+      <div class="module-card-header">
+        <div class="module-icon">💾</div>
+        <div>
+          <div class="module-name">Inkrementeller Cache</div>
+        </div>
+      </div>
+      <div class="module-desc">
+        Nach <strong>jeder</strong> LLM-Antwort wird sofort in <code>ea_insights.json</code> 
+        gespeichert. Bei Stromausfall oder Abbruch: Neustart setzt genau am nächsten 
+        unanalysierten EA fort (z.B. bei Index 1001, wenn 1000 bereits verarbeitet).
+      </div>
+    </div>
+    <div class="module-card avoid-break">
+      <div class="module-card-header">
+        <div class="module-icon">🎯</div>
+        <div>
+          <div class="module-name">Batch-Synthese (35 Postings)</div>
+        </div>
+      </div>
+      <div class="module-desc">
+        Nur die <strong>letzten 35 Postings</strong> pro EA werden an das LLM gesendet. 
+        Dies fokussiert auf aktuelles Community-Feedback, minimiert API-Kosten 
+        und vermeidet veraltete Informationen aus frühen Experimentphasen.
+      </div>
+    </div>
+    <div class="module-card avoid-break">
+      <div class="module-card-header">
+        <div class="module-icon">🔄</div>
+        <div>
+          <div class="module-name">Rate-Limiting</div>
+        </div>
+      </div>
+      <div class="module-desc">
+        Automatische Pause von <strong>4,5 Sekunden</strong> zwischen API-Aufrufen 
+        (OpenRouter Free Tier: max. 15 RPM). Verhindert HTTP-429-Fehler und 
+        stellt zuverlässige Verarbeitung sicher.
+      </div>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================
+       SECTION 11: BACKTESTING
+  ============================================================ -->
+  <h1 class="section-heading"><span class="sec-num">11</span> Backtesting-Integration</h1>
+
+  <p>
+    Die Backtesting-Integration verbindet den Telegram-Scraper mit dem separaten 
+    <strong>Java Backtester</strong>-Projekt, um vollautomatisch MetaTrader 5 
+    Strategy-Tester-Läufe für alle qualifizierten EAs durchzuführen.
+  </p>
+
+  <h2 class="sub-heading">11.1 Architektur der Backtesting-Kette</h2>
+
+  <div class="diagram-wrapper">
+    <div class="diagram-title">🏦 Backtesting-Pipeline</div>
+    <div class="mermaid">
+sequenceDiagram
+    participant D as Dashboard
+    participant P as run_batch_backtests.py
+    participant J as Java Backtester (JAR)
+    participant M as MetaTrader 5
+
+    D->>P: "Backtest starten" (via API)
+    P->>P: EA-Daten aus dashboard.html extrahieren
+    P->>P: Filter: Score >= 50, keine Scam-EAs
+    P->>P: Symbols & Periods aus LLM-Analyse
+    P->>P: batch_config.json schreiben
+    P->>J: java -jar backtester.jar --cli batch_config.json
+    J->>M: MT5 via COM/DDE starten
+    J->>M: Strategy Tester für jeden Run
+    M-->>J: Backtest-Ergebnisse (.html)
+    J-->>P: Exit Code 0 (Erfolg)
+    P->>D: generate_backtest_dashboard.py
+    </div>
+  </div>
+
+  <h2 class="sub-heading">11.2 Filterungslogik für Backtests</h2>
+  <p>
+    Nicht alle EAs werden getestet. Das Skript wendet drei Filterebenen an:
+  </p>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Filterebene</th><th>Bedingung</th><th>Begründung</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Score-Filter</td>
+        <td><code>score &gt;= 50</code> (Standard)</td>
+        <td>Nur EAs mit ausreichender Community-Reputation werden getestet</td>
+      </tr>
+      <tr>
+        <td>Scam-Filter</td>
+        <td><code>"scam" not in risk.lower()</code></td>
+        <td>EAs mit Scam-Warnungen werden komplett ausgeschlossen</td>
+      </tr>
+      <tr>
+        <td>Datei-Filter</td>
+        <td>Mindestens eine .ex5 oder .ex4 im robots/-Ordner</td>
+        <td>Ohne ausführbare Datei kein Backtest möglich</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-heading">11.3 batch_config.json Format</h2>
+
+  <div class="code-block avoid-break">
+    <span class="code-lang">JSON – batch_config.json (vereinfacht)</span>
+    <pre>{
+  <span class="fn">"output_directory"</span>: <span class="st">"D:/Backtester/backtest_reports/batch_runs"</span>,
+  <span class="fn">"settings"</span>: {
+    <span class="fn">"from_date"</span>:          <span class="st">"2025-01-01"</span>,
+    <span class="fn">"to_date"</span>:            <span class="st">"2026-06-01"</span>,
+    <span class="fn">"deposit"</span>:            <span class="nu">10000</span>,
+    <span class="fn">"currency"</span>:           <span class="st">"USD"</span>,
+    <span class="fn">"leverage"</span>:           <span class="st">"1:100"</span>,
+    <span class="fn">"model"</span>:              <span class="nu">1</span>,  <span class="cm">// 1 = 1m OHLC (Empfehlung)</span>
+    <span class="fn">"use_virtual_desktop"</span>: <span class="kw">true</span>,
+    <span class="fn">"auto_kill_mt5"</span>:      <span class="kw">true</span>
+  },
+  <span class="fn">"runs"</span>: [
+    {
+      <span class="fn">"expert_name"</span>: <span class="st">"WakaWaka_EURUSD_M15"</span>,
+      <span class="fn">"expert_path"</span>: <span class="st">"D:/TelegramScraper/report/robots/Waka_Waka/WakaWaka.ex5"</span>,
+      <span class="fn">"symbol"</span>:      <span class="st">"EURUSD"</span>,
+      <span class="fn">"period"</span>:      <span class="st">"M15"</span>,
+      <span class="fn">"set_file_path"</span>: <span class="st">"D:/.../WakaWaka_EURUSD.set"</span>
+    }
+  ]
+}</pre>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================
+       SECTION 12: SECURITY
+  ============================================================ -->
+  <h1 class="section-heading"><span class="sec-num">12</span> Sicherheit &amp; Best Practices</h1>
+
+  <div class="callout danger">
+    <span class="callout-icon">🔐</span>
+    <div class="callout-content">
+      <h4>Kritische Sicherheitshinweise</h4>
+      <p>
+        Die Session-Datei <code>session_telegram_extractor.session</code> enthält Ihre 
+        Telegram-Authentifizierung. Sie darf unter keinen Umständen geteilt, 
+        in ein Git-Repository eingecheckt oder auf öffentlichen Servern gespeichert werden.
+      </p>
+    </div>
+  </div>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Datei</th><th>Sicherheitsrisiko</th><th>Maßnahme</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>session_*.session</code></td>
+        <td>🔴 Kritisch – Vollständiger Telegram-Account-Zugang</td>
+        <td>In .gitignore, niemals teilen, verschlüsseln wenn auf Netzlaufwerk</td>
+      </tr>
+      <tr>
+        <td><code>config.local.json</code></td>
+        <td>🟠 Hoch – API-Key für kostenpflichtige LLM-Anfragen</td>
+        <td>In .gitignore, API-Key-Limits auf openrouter.ai setzen</td>
+      </tr>
+      <tr>
+        <td><code>result.json</code></td>
+        <td>🟡 Mittel – Enthält private Chat-Daten</td>
+        <td>Nicht versionieren, nur lokal verarbeiten</td>
+      </tr>
+      <tr>
+        <td>EA-Dateien (.ex4/.ex5)</td>
+        <td>🟡 Mittel – Fremder Code aus unbekannten Quellen</td>
+        <td>Nur im Strategy Tester laufen lassen, niemals auf Live-Konto ohne Prüfung</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-heading">12.1 EA-Dateien: Vorsichtsmaßnahmen</h2>
+  <div class="callout warning">
+    <span class="callout-icon">⚠️</span>
+    <div class="callout-content">
+      <h4>Expert Advisors aus Telegram: Sicherheitsrisiken</h4>
+      <p>
+        EA-Dateien (.ex4, .ex5) aus Telegram-Gruppen stammen von unbekannten Entwicklern. 
+        Sie können Malware, Backdoors oder schädliche DLL-Imports enthalten. 
+        <strong>Empfehlung:</strong> Nur in einer isolierten MetaTrader-Testumgebung 
+        auf einem Demo-Konto verwenden. Niemals "DLL-Importe erlauben" aktivieren, 
+        wenn nicht 100% vertrauenswürdig.
+      </p>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================
+       SECTION 13: TROUBLESHOOTING
+  ============================================================ -->
+  <h1 class="section-heading"><span class="sec-num">13</span> Fehlerbehandlung &amp; Troubleshooting</h1>
+
+  <h2 class="sub-heading">13.1 Häufige Fehler &amp; Lösungen</h2>
+
+  <table class="avoid-break">
+    <thead>
+      <tr>
+        <th>Fehlermeldung / Symptom</th>
+        <th>Ursache</th>
+        <th>Lösung</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>'python' is not recognized</code></td>
+        <td>Python nicht im System-PATH</td>
+        <td>Python neu installieren mit aktiviertem "Add to PATH"</td>
+      </tr>
+      <tr>
+        <td><code>ModuleNotFoundError: telethon</code></td>
+        <td>Telethon nicht installiert</td>
+        <td>In GUI: Button "Telethon jetzt via Pip installieren" klicken, oder: <code>pip install telethon</code></td>
+      </tr>
+      <tr>
+        <td>Dashboard zeigt leere Tabelle</td>
+        <td>Keine Daten in SQLite oder LLM-Analyse nicht gelaufen</td>
+        <td>Erst Schritt 1 (Extraktion), dann Schritt 2 (LLM-Analyse), dann Schritt 3 (Dashboard) im Pipeline ausführen</td>
+      </tr>
+      <tr>
+        <td><code>API Fehler 429</code></td>
+        <td>OpenRouter Rate-Limit überschritten</td>
+        <td>System wartet automatisch 4,5s. Bei anhaltenden 429ern: kostenpflichtiges OpenRouter-Tier oder anderen API-Key</td>
+      </tr>
+      <tr>
+        <td>Server reagiert nicht auf localhost:8000</td>
+        <td>Alter Server-Prozess blockiert Port</td>
+        <td><code>start_dashboard.bat</code> prüft und killt alte Prozesse automatisch (check_rebuild.py)</td>
+      </tr>
+      <tr>
+        <td>2FA-Eingabefenster öffnet sich nicht</td>
+        <td>Threading-Problem mit Tkinter</td>
+        <td>Programm neu starten, sicherstellen dass kein anderes Fenster im Vordergrund ist</td>
+      </tr>
+      <tr>
+        <td><code>result.json nicht gefunden</code></td>
+        <td>Falsche Dateiauswahl oder Export-Format HTML</td>
+        <td>Sicherstellen, dass bei Telegram Desktop Export "JSON" (nicht "HTML") gewählt wurde</td>
+      </tr>
+      <tr>
+        <td>Extraktion hängt bei 0%</td>
+        <td>result.json sehr groß (mehrere GB)</td>
+        <td>Normal bei großen Chats – JSON muss komplett geladen werden. Geduld. Bei OutOfMemory: Python 64-bit prüfen</td>
+      </tr>
+      <tr>
+        <td>LLM gibt kein valides JSON zurück</td>
+        <td>Modell antwortet mit Prosa statt JSON</td>
+        <td>Dreistufiger Fallback-Parser verarbeitet meist. Bei anhaltenden Fehlern: Modell wechseln auf GPT-3.5/4</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-heading">13.2 Log-Datei Analyse</h2>
+  <p>
+    Alle wichtigen Ereignisse werden in <code>log/telegram_scraper.log</code> protokolliert. 
+    Die Logdatei ist nach folgendem Schema aufgebaut:
+  </p>
+
+  <div class="code-block avoid-break">
+    <span class="code-lang">Log-Format</span>
+    <pre><span class="cm">[2026-06-04 16:45:00] [LLM_ANALYSIS] [*] Starte Batch-Extraktion über OpenRouter...</span>
+<span class="cm">[2026-06-04 16:45:01] [LLM_ANALYSIS] [*] [1/463] Analysiere Waka Waka (127 Postings)...</span>
+<span class="cm">[2026-06-04 16:45:06] [LLM_ANALYSIS]   [+] Validierte Insights:</span>
+<span class="st">[2026-06-04 16:45:06] [LLM_ANALYSIS]   {"description": "Waka Waka ist ein Grid-EA..."}</span>
+<span class="cm">[2026-06-04 16:45:06] [LLM_ANALYSIS] PROGRESS: 1</span>
+
+<span class="cm"># Bei Fehler:</span>
+<span class="nu">[2026-06-04 16:46:00] [LLM_ANALYSIS]   [!] Fehler bei Quantum_Processor: API Fehler 429: ...</span></pre>
+  </div>
+
+  <h2 class="sub-heading">13.3 Daten-Reset und Neustart</h2>
+  <p>
+    Wenn die Analyse komplett neu gestartet werden soll:
+  </p>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Was zurücksetzen?</th><th>Aktion</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Nur LLM-Cache</td>
+        <td>Datei <code>extracted_data/ea_insights.json</code> löschen (oder über Dashboard-API: <code>/api/reset-cache</code>)</td>
+      </tr>
+      <tr>
+        <td>Nur Datenbank</td>
+        <td>Datei <code>data/telegram_scraper.db</code> löschen – wird beim nächsten Dashboard-Update neu erstellt</td>
+      </tr>
+      <tr>
+        <td>Kompletter Reset</td>
+        <td>Ordner <code>extracted_data/</code> leeren, beide oben genannten Dateien löschen, dann Pipeline von vorne starten</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================
+       SECTION 14: DEVELOPER GUIDE
+  ============================================================ -->
+  <h1 class="section-heading"><span class="sec-num">14</span> Entwickler-Richtlinien</h1>
+
+  <h2 class="sub-heading">14.1 Kritische Coding-Regeln</h2>
+
+  <div class="callout danger">
+    <span class="callout-icon">🚫</span>
+    <div class="callout-content">
+      <h4>Regel #1: Niemals os.getcwd() für Projektpfade verwenden!</h4>
+      <p>
+        <code>os.getcwd()</code> gibt das Verzeichnis zurück, von dem aus das Skript aufgerufen wird – 
+        nicht das Verzeichnis, in dem das Skript liegt. Bei Aufruf aus einem anderen Ordner 
+        schlagen alle Dateioperationen fehl.
+      </p>
+    </div>
+  </div>
+
+  <div class="code-block avoid-break">
+    <span class="code-lang">Python – Korrekte Pfadauflösung (OBLIGATORISCH)</span>
+    <pre><span class="kw">from</span> pathlib <span class="kw">import</span> Path
+
+<span class="cm"># ✅ RICHTIG: Skriptrelative Pfade</span>
+PROJECT_ROOT = Path(<span class="fn">__file__</span>).parent.parent.<span class="fn">resolve</span>()
+LOG_DIR      = PROJECT_ROOT / <span class="st">"log"</span>
+DATA_DIR     = PROJECT_ROOT / <span class="st">"extracted_data"</span>
+CONFIG_FILE  = PROJECT_ROOT / <span class="st">"config.local.json"</span>
+
+<span class="cm"># ❌ FALSCH: Wird vom Start-Verzeichnis abhängig</span>
+<span class="cm"># PROJECT_ROOT = Path.cwd()  ← NIEMALS SO!</span>
+<span class="cm"># PROJECT_ROOT = Path(os.getcwd())  ← NIEMALS SO!</span></pre>
+  </div>
+
+  <div class="callout danger">
+    <span class="callout-icon">🔒</span>
+    <div class="callout-content">
+      <h4>Regel #2: Lock-Release vor allen I/O-Operationen im HTTP-Server</h4>
+      <p>
+        Netzwerk-Calls und HTTP-Response-Schreibvorgänge dürfen NICHT innerhalb 
+        einer <code>pipeline_lock</code>-Sperre stattfinden. Immer: Daten kopieren → Lock freigeben → I/O.
+      </p>
+    </div>
+  </div>
+
+  <div class="code-block avoid-break">
+    <span class="code-lang">Python – Korrektes Lock-Pattern im HTTP-Server</span>
+    <pre><span class="cm"># ✅ RICHTIG: Lock vor I/O freigeben</span>
+<span class="kw">with</span> pipeline_lock:
+    data_copy = pipeline_state.<span class="fn">copy</span>()  <span class="cm"># Daten kopieren</span>
+<span class="cm"># Lock wurde durch 'with'-Block beendet</span>
+response = json.<span class="fn">dumps</span>(data_copy)  <span class="cm"># I/O AUSSERHALB des Locks</span>
+self.<span class="fn">wfile</span>.<span class="fn">write</span>(response.<span class="fn">encode</span>())
+
+<span class="cm"># ❌ FALSCH: Lock während I/O gehalten → Deadlock!</span>
+<span class="cm"># with pipeline_lock:</span>
+<span class="cm">#     self.wfile.write(json.dumps(pipeline_state).encode())  ← DEADLOCK!</span></pre>
+  </div>
+
+  <div class="callout danger">
+    <span class="callout-icon">🧵</span>
+    <div class="callout-content">
+      <h4>Regel #3: Tkinter-Widgets nur im Hauptthread modifizieren</h4>
+      <p>
+        Alle GUI-Änderungen müssen über <code>self.log_queue.put()</code> aus 
+        Hintergrundthreads kommuniziert werden. <code>poll_logs()</code> im Hauptthread 
+        verarbeitet dann die Queue thread-sicher.
+      </p>
+    </div>
+  </div>
+
+  <h2 class="sub-heading">14.2 Verzeichnisstruktur</h2>
+
+  <div class="file-tree">
+<span class="dir">TelegramScraper/</span>
+├── <span class="dir">src/</span>                              <span class="comment"># Alle Python-Module</span>
+│   ├── <span class="file">telegram_extractor_gui.py</span>        <span class="comment"># Haupt-GUI (68KB)</span>
+│   ├── <span class="file">telegram_extractor.py</span>            <span class="comment"># JSON-Parser (13KB)</span>
+│   ├── <span class="file">telegram_api_downloader.py</span>       <span class="comment"># API-Client (12KB)</span>
+│   ├── <span class="file">extract_ea_details_llm.py</span>        <span class="comment"># LLM-Analyse (16KB)</span>
+│   ├── <span class="file">generate_dashboard.py</span>            <span class="comment"># Dashboard-Generator (35KB)</span>
+│   ├── <span class="file">dashboard_server.py</span>              <span class="comment"># HTTP-Server (30KB)</span>
+│   ├── <span class="file">run_batch_backtests.py</span>           <span class="comment"># Backtester-Adapter (9KB)</span>
+│   ├── <span class="file">analyze_organize.py</span>             <span class="comment"># Subroutine (27KB)</span>
+│   ├── <span class="file">generate_backtest_dashboard.py</span>   <span class="comment"># Ergebnis-Dashboard (34KB)</span>
+│   ├── <span class="file">check_rebuild.py</span>                 <span class="comment"># Intelligenter Rebuild-Check</span>
+│   └── <span class="file">test_extractor.py</span>                <span class="comment"># Automatisierte Testsuite</span>
+├── <span class="dir">doc/</span>                              <span class="comment"># Dokumentation</span>
+│   ├── <span class="file">architecture.md</span>
+│   ├── <span class="file">developer_guide.md</span>
+│   ├── <span class="file">project_overview_ai.md</span>
+│   └── <span class="file">user_guide.md</span>
+├── <span class="dir">extracted_data/</span>                   <span class="comment"># Ausgabedaten (gitignored)</span>
+│   ├── <span class="dir">forex_files/</span>                     <span class="comment"># Extrahierte EA-Dateien</span>
+│   ├── <span class="dir">chat_chunks/</span>                     <span class="comment"># LLM-optimierte Texte</span>
+│   ├── <span class="file">ea_insights.json</span>                 <span class="comment"># LLM-Cache</span>
+│   ├── <span class="file">forex_report.md</span>
+│   └── <span class="file">forex_report.csv</span>
+├── <span class="dir">data/</span>                             <span class="comment"># SQLite-Datenbank</span>
+│   └── <span class="file">telegram_scraper.db</span>
+├── <span class="dir">report/</span>                           <span class="comment"># HTML-Ausgabe</span>
+│   ├── <span class="file">dashboard.html</span>
+│   └── <span class="dir">robots/</span>                          <span class="comment"># Katalogisierte EAs</span>
+├── <span class="dir">prompts/</span>                          <span class="comment"># KI-Prompt-Vorlagen</span>
+├── <span class="dir">log/</span>                              <span class="comment"># Logfiles</span>
+├── <span class="file">config.local.json</span>                 <span class="comment"># Lokal (gitignored!)</span>
+├── <span class="file">requirements.txt</span>                  <span class="comment"># Python-Abhängigkeiten</span>
+├── <span class="file">start.bat</span>                         <span class="comment"># Start Desktop-GUI</span>
+└── <span class="file">start_dashboard.bat</span>               <span class="comment"># Start Web-Dashboard</span>
+  </div>
+
+  <h2 class="sub-heading">14.3 Automatisierte Tests</h2>
+  <p>
+    Die Testsuite <code>src/test_extractor.py</code> erstellt eine vollständige 
+    Testumgebung mit Mock-Daten und prüft alle Core-Funktionen:
+  </p>
+
+  <div class="code-block avoid-break">
+    <span class="code-lang">Shell – Tests ausführen</span>
+    <pre>python src/test_extractor.py
+
+<span class="cm"># Erwartete Ausgabe bei Erfolg:</span>
+<span class="st">=== VERIFIZIERUNG ERFOLGREICH ===</span>
+
+<span class="cm"># Was der Test prüft:</span>
+<span class="cm"># 1. Erstellt Testverzeichnis test_env/</span>
+<span class="cm"># 2. Generiert Mock-EA-Dateien (robot1.ex4, robot2.ex5, logic.mq5, etc.)</span>
+<span class="cm"># 3. Erstellt künstliche result.json mit verschiedenen Nachrichtentypen</span>
+<span class="cm"># 4. Führt Kern-Extraktionsmethode aus</span>
+<span class="cm"># 5. Prüft: richtige Dateien extrahiert, Chunks korrekt aufgeteilt</span>
+<span class="cm"># 6. Prüft: Berichte (.md + .csv) vollständig generiert</span>
+<span class="cm"># 7. Löscht test_env/ rückstandslos</span></pre>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================
+       SECTION 15: GLOSSARY
+  ============================================================ -->
+  <h1 class="section-heading"><span class="sec-num">15</span> Glossar &amp; Referenzen</h1>
+
+  <h2 class="sub-heading">15.1 Glossar</h2>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Begriff</th><th>Erklärung</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>EA</strong></td><td>Expert Advisor – ein automatischer Handelsroboter für die MetaTrader-Plattform</td></tr>
+      <tr><td><strong>MT4 / MT5</strong></td><td>MetaTrader 4 / MetaTrader 5 – professionelle Handelsplattformen für Forex</td></tr>
+      <tr><td><strong>MQL4 / MQL5</strong></td><td>MetaQuotes Language – proprietäre Programmiersprachen für MetaTrader EAs</td></tr>
+      <tr><td><strong>Telethon</strong></td><td>Python-Bibliothek für die Telegram-API (MTProto-Protokoll-Implementierung)</td></tr>
+      <tr><td><strong>MTProto</strong></td><td>Telegram's proprietäres, verschlüsseltes Binärprotokoll für die Client-API</td></tr>
+      <tr><td><strong>LLM</strong></td><td>Large Language Model – KI-Sprachmodell (z.B. GPT-4, Claude, Llama, Gemini)</td></tr>
+      <tr><td><strong>OpenRouter</strong></td><td>API-Aggregator-Service der hunderte LLM-Modelle über eine einheitliche Schnittstelle anbietet</td></tr>
+      <tr><td><strong>Chunking</strong></td><td>Das Aufteilen eines langen Textes in kleinere, überschaubare Abschnitte</td></tr>
+      <tr><td><strong>Lost in the Middle</strong></td><td>Bekanntes Problem bei LLMs: Details in der Mitte langer Dokumente werden übersehen</td></tr>
+      <tr><td><strong>Pydantic</strong></td><td>Python-Bibliothek für Datenvalidierung mit Typen-Annotation</td></tr>
+      <tr><td><strong>Martingale</strong></td><td>Riskante Handels-Strategie: Bei Verlust wird die Positionsgröße verdoppelt</td></tr>
+      <tr><td><strong>Drawdown</strong></td><td>Maximaler prozentualer Wertverlust vom Höchststand bis zum Tiefststand</td></tr>
+      <tr><td><strong>Backtest</strong></td><td>Test einer Handelsstrategie auf historischen Kursdaten</td></tr>
+      <tr><td><strong>Strategy Tester</strong></td><td>Eingebautes MT5-Tool zum Testen von EAs auf Historien-Daten</td></tr>
+      <tr><td><strong>2FA</strong></td><td>Zweistufige Verifizierung – Sicherheitsfeature für Telegram-Konten</td></tr>
+      <tr><td><strong>asyncio</strong></td><td>Python's asynchrones I/O-Framework für concurrent Netzwerkoperationen</td></tr>
+      <tr><td><strong>SQLite</strong></td><td>Dateibasiertes, serverless Datenbankformat – eingebettet in Python</td></tr>
+      <tr><td><strong>Thread-safe</strong></td><td>Code, der korrekt funktioniert, wenn er von mehreren Threads gleichzeitig ausgeführt wird</td></tr>
+      <tr><td><strong>Sentiment</strong></td><td>Die Stimmung / Meinungsrichtung (positiv, neutral, negativ) in Texten</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-heading">15.2 Unterstützte Währungspaare</h2>
+  <p>
+    Der Backtester unterstützt folgende 23 Währungspaare und Rohstoffe für automatisierte Tests:
+  </p>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Kategorie</th><th>Paare</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Major Pairs</strong></td>
+        <td>EURUSD, GBPUSD, USDJPY, USDCHF, USDCAD, AUDUSD, NZDUSD</td>
+      </tr>
+      <tr>
+        <td><strong>Cross Pairs (EUR)</strong></td>
+        <td>EURGBP, EURJPY, EURAUD, EURCHF</td>
+      </tr>
+      <tr>
+        <td><strong>Cross Pairs (GBP)</strong></td>
+        <td>GBPJPY, GBPCHF</td>
+      </tr>
+      <tr>
+        <td><strong>Cross Pairs (AUD)</strong></td>
+        <td>AUDCAD, AUDCHF, AUDJPY, AUDNZD</td>
+      </tr>
+      <tr>
+        <td><strong>Cross Pairs (CAD/NZD/CHF)</strong></td>
+        <td>CADCHF, CADJPY, NZDJPY</td>
+      </tr>
+      <tr>
+        <td><strong>Rohstoffe</strong></td>
+        <td>XAUUSD (Gold), XAGUSD (Silber), XTIUSD (WTI Öl)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-heading">15.3 Referenzen &amp; Links</h2>
+
+  <table class="avoid-break">
+    <thead>
+      <tr><th>Ressource</th><th>URL / Pfad</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Telethon Dokumentation</td><td>https://docs.telethon.dev/</td></tr>
+      <tr><td>OpenRouter API</td><td>https://openrouter.ai/docs</td></tr>
+      <tr><td>MetaTrader 5 Dokumentation</td><td>https://www.mql5.com/de/docs</td></tr>
+      <tr><td>Pydantic Dokumentation</td><td>https://docs.pydantic.dev/</td></tr>
+      <tr><td>Tech-Blog Artikel</td><td>https://tnickel-ki.de/blogs/blog-telegramscraper.html</td></tr>
+      <tr><td>Projekt-Architektur</td><td><code>doc/architecture.md</code></td></tr>
+      <tr><td>Entwickler-Handbuch</td><td><code>doc/developer_guide.md</code></td></tr>
+      <tr><td>KI-Projekt-Übersicht</td><td><code>doc/project_overview_ai.md</code></td></tr>
+    </tbody>
+  </table>
+
+</div><!-- end content-wrapper -->
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <p>
+    <strong>Telegram Chat &amp; Forex EA Extractor</strong> | 
+    Professionelles Benutzerhandbuch v2.0 | 
+    © 2026 AntiGravity Software – Thomas Nickel |
+    KI-Augmented Engineering | tnickel-ki.de
+  </p>
+  <p style="margin-top: 8px; font-size: 10px;">
+    Dieses Dokument wurde automatisch generiert und enthält alle wesentlichen Informationen 
+    zum Betrieb, zur Entwicklung und zum Troubleshooting des Telegram Scraper Systems.
+  </p>
+</div>
+
+<!-- Mermaid.js für Diagramme -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      fontSize: '13px',
+      fontFamily: 'Segoe UI, Inter, Arial, sans-serif',
+      primaryColor: '#f5f3ff',
+      primaryTextColor: '#1a202c',
+      primaryBorderColor: '#6d28d9',
+      lineColor: '#6d28d9',
+      secondaryColor: '#eff6ff',
+      tertiaryColor: '#f0fdf4'
+    },
+    flowchart: { useMaxWidth: true, htmlLabels: true },
+    sequence: { useMaxWidth: true }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+Dieser Roboter verwendet standardmäßig seine integrierten Default-Einstellungen.
+Es sind keine externen .set-Dateien erforderlich.

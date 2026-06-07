@@ -1,0 +1,30 @@
+# Python-spezifisch
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+.env
+
+# Lokale Konfigurationsdateien (Sensible Daten)
+config.local.json
+config.*.local.json
+*.local.json
+.env.*
+!.env.example
+
+# Telegram Session Dateien (Enthält aktive Anmelde-Schlüssel!)
+*.session
+*.session-journal
+*.session-shm
+*.session-wal
+
+# Extrahierte Daten und Testumgebungen
+extracted_data/
+test_env/
+telegram_scraper.log
+*.log
+
+# Generierte lokale Laufzeitdaten
+data/*.db
+data/batch_config.json

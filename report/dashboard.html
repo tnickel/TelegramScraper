@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Scraper - Forex Robot Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.css?v=1.0.7">
+</head>
+<body>
+
+    <header>
+        <h1>Forex Expert Advisor Catalog</h1>
+        <div class="subtitle">Interaktive Marktübersicht, Sentiment-Analyse & Dateizuordnung</div>
+        <div class="subtitle" style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">💡 Tipp: Einfacher Klick markiert den Roboter, Doppelklick öffnet die Erklärung und Dateizuordnungen.</div>
+    </header>
+
+    <div class="stats-grid">
+        <div class="stat-card stat-files">
+            <div class="stat-value" id="stat-files">-</div>
+            <div class="stat-label">📁 Clustered Files</div>
+        </div>
+        <div class="stat-card stat-messages">
+            <div class="stat-value" id="stat-messages">-</div>
+            <div class="stat-label">💬 Scanned Messages</div>
+        </div>
+        <div class="stat-card stat-robots">
+            <div class="stat-value" id="stat-robots">-</div>
+            <div class="stat-label">🤖 Identified Robots</div>
+        </div>
+        <div class="stat-card stat-sentiment">
+            <div class="stat-value" id="top-sentiment">-</div>
+            <div class="stat-label">📈 Match Sentiment</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <input type="text" class="search-bar" id="search-input" placeholder="Roboter suchen (z.B. Waka, Gold)...">
+        <div class="filter-buttons">
+            <button class="btn active" onclick="filterStrategy('all')">Alle</button>
+            <button class="btn" onclick="filterStrategy('mt5')">MT5 EAs</button>
+            <button class="btn" onclick="filterStrategy('mt4')">MT4 EAs</button>
+            <button class="btn" onclick="filterStrategy('grid')">Grid</button>
+            <button class="btn" onclick="filterStrategy('scalper')">Scalper</button>
+            <button class="btn" onclick="filterStrategy('ai')">AI / KI</button>
+            <button class="btn" onclick="filterStrategy('scam')">Scam-Warnungen</button>
+            <button class="btn" id="analytics-tab-btn" onclick="showAnalyticsSection()">Analytics 📊</button>
+            <button class="btn" id="workflow-tab-btn" onclick="showWorkflowSection()">Workflow ⚙️</button>
+            <button class="btn" style="background: linear-gradient(135deg, #a78bfa 0%, #3b82f6 100%); color: white; border: none; font-weight: 600;" onclick="openSummaryModal()">📋 Zusammenfassung exportieren</button>
+        </div>
+    </div>
+
+    <div class="table-container" id="table-view-container">
+        <table>
+            <thead>
+                <tr>
+                    <th onclick="sortTable('rank')">Rank</th>
+                    <th onclick="sortTable('name')">Name</th>
+                    <th onclick="sortTable('mentions')">Postings (Mentions)</th>
+                    <th onclick="sortTable('score')">Score</th>
+                    <th onclick="sortTable('strategy')">Strategie</th>
+                    <th onclick="sortTable('risk')">Risiko</th>
+                    <th onclick="sortTable('files')">Files</th>
+                </tr>
+            </thead>
+            <tbody id="robots-table-body">
+                <!-- Dynamisch generiert -->
+            </tbody>
+        </table>
+        <!-- Pagination Controls -->
+        <div id="pagination-controls" class="pagination-bar" style="display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; background: rgba(0,0,0,0.15); border-top: 1px solid var(--border-glass);">
+            <div id="pagination-info" style="color: var(--text-secondary); font-size: 0.9rem;">
+                Zeige 0-0 von 0 EAs
+            </div>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <button id="prev-page-btn" class="btn" onclick="changePage(currentPage - 1)" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">&larr; Zurück</button>
+                <span id="page-num-display" style="color: var(--text-primary); font-weight: 600; font-size: 0.9rem; margin: 0 0.5rem;">Seite 1 von 1</span>
+                <button id="next-page-btn" class="btn" onclick="changePage(currentPage + 1)" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Weiter &rarr;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Section -->
+    <div id="analytics-section" class="analytics-container" style="display: none;">
+        <div class="analytics-header">
+            <h2>Community-Analysen & Settings-Bericht</h2>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <button class="btn" id="generate-report-btn" onclick="showWorkflowSection()" style="background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-blue) 100%); color: white; border: none; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: 12px; cursor: pointer; transition: all 0.3s ease;">⚙️ Workflow-Steuerung öffnen</button>
+            </div>
+        </div>
+        
+        <div id="progress-container" style="display: none; margin-bottom: 2rem; background: rgba(0, 0, 0, 0.2); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-glass);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                <span id="progress-status" style="color: var(--text-secondary);">Initialisiere...</span>
+                <span id="progress-percentage" style="color: var(--accent-purple); font-weight: 600;">0%</span>
+            </div>
+            <div class="progress-bar-bg" style="width: 100%; height: 12px; background: rgba(255,255,255,0.05); border-radius: 6px; overflow: hidden; border: 1px solid var(--border-glass);">
+                <div id="progress-bar-fill" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue)); transition: width 0.3s ease;"></div>
+            </div>
+        </div>
+
+        <div id="report-content" class="report-box">
+            <p style="color: var(--text-secondary); text-align: center; padding: 2rem;">Lade Bericht...</p>
+        </div>
+    </div>
+
+    <!-- Workflow Section -->
+    <div id="workflow-section" class="workflow-container" style="display: none;">
+        <div class="workflow-header">
+            <h2>Process Automation Workflow ⚙️</h2>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn" id="run-all-btn" onclick="runPipeline('all')" style="background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-blue) 100%); color: white; border: none; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: 12px; cursor: pointer; transition: all 0.3s ease;">▶️ Gesamten Workflow ausführen</button>
+                <button class="btn" id="reset-pipeline-btn" onclick="resetPipeline()" style="padding: 0.75rem 1.5rem; border-radius: 12px;">🔄 Status zurücksetzen</button>
+            </div>
+        </div>
+
+        <!-- OpenRouter API Key configuration card -->
+        <div class="api-config-card" style="background: rgba(255, 255, 255, 0.015); border: 1px solid var(--border-glass); border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h3 style="font-family: var(--font-display); font-size: 1.2rem; color: var(--text-primary); margin-bottom: 0.25rem;">🔑 OpenRouter API-Konfiguration</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); max-width: 500px;">Für Schritt 2 (LLM EA-Details Analyse) wird eine Verbindung zu OpenRouter hergestellt (unterstützt kostenlose Modelle).</p>
+                </div>
+                <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.2); padding: 0.5rem 0.75rem; border-radius: 10px; font-size: 0.85rem;">
+                    <strong>Status:</strong> <span id="api-key-status" style="color: var(--accent-red); font-weight: 600;">Lade Status...</span>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; align-items: center; width: 100%; flex-wrap: wrap;">
+                <div style="flex-grow: 1; min-width: 250px; display: flex; flex-direction: column; gap: 0.25rem;">
+                    <label for="gemini-api-key-input" style="font-size: 0.75rem; color: var(--text-secondary);">OpenRouter API-Key:</label>
+                    <div style="display: flex; gap: 0.5rem; width: 100%;">
+                        <input type="password" id="gemini-api-key-input" placeholder="OpenRouter API-Key" style="flex-grow: 1; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-glass); padding: 0.75rem 1rem; border-radius: 10px; color: var(--text-primary); font-family: monospace; font-size: 0.9rem; outline: none;">
+                        <button class="btn" onclick="toggleApiKeyVisibility()" style="padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.85rem;">👁️</button>
+                    </div>
+                </div>
+
+                <div style="width: 280px; display: flex; flex-direction: column; gap: 0.25rem;">
+                    <label for="openrouter-model-select" style="font-size: 0.75rem; color: var(--text-secondary);">Modell (LLM):</label>
+                    <select id="openrouter-model-select" style="width: 100%; background: var(--bg-secondary); border: 1px solid var(--border-glass); padding: 0.75rem 1rem; border-radius: 10px; color: var(--text-primary); font-family: var(--font-body); font-size: 0.9rem; outline: none; cursor: pointer;">
+                        <option value="meta-llama/llama-3.1-8b-instruct">Llama 3.1 8B (Kostenpflichtig - Extrem günstig: $0.02/M - Empfohlen)</option>
+                        <option value="google/gemma-3-12b-it">Gemma 3 12B (Kostenpflichtig - Sehr günstig: $0.04/M)</option>
+                        <option value="openai/gpt-4o-mini">GPT-4o Mini (Kostenpflichtig - Günstig: $0.15/M)</option>
+                        <option value="meta-llama/llama-3.3-70b-instruct:free">Llama 3.3 70B (Kostenlos - Überlastungsanfällig)</option>
+                        <option value="meta-llama/llama-3.2-3b-instruct:free">Llama 3.2 3B (Kostenlos - Überlastungsanfällig)</option>
+                    </select>
+                </div>
+
+                <button class="btn active" onclick="saveApiKey()" style="padding: 0.75rem 1.5rem; border-radius: 10px; align-self: flex-end; margin-top: 1rem; margin-right: 0.5rem;">Speichern</button>
+                <button id="btn-test-llm" class="btn" onclick="testLlm()" style="padding: 0.75rem 1.5rem; border-radius: 10px; align-self: flex-end; margin-top: 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-glass); color: var(--text-primary); cursor: pointer;">🧪 LLM Testen</button>
+            </div>
+            
+            <div id="llm-test-result" style="display:none; margin-top: 1.25rem; padding: 1rem; border-radius: 10px; font-family: 'Consolas', monospace; font-size: 0.85rem; line-height: 1.4;"></div>
+            
+            <div style="border-top: 1px solid var(--border-glass); padding-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary);">📖 Anleitung: Wie bekomme ich einen OpenRouter API-Key?</span>
+                <ol style="font-size: 0.8rem; color: var(--text-secondary); margin-left: 1.25rem; line-height: 1.6;">
+                    <li>Gehe auf die <a href="https://openrouter.ai/" target="_blank" style="color: var(--accent-blue); text-decoration: none;">OpenRouter Website (openrouter.ai)</a> und melde dich an (z. B. mit deinem Google-Konto).</li>
+                    <li>Klicke oben rechts auf dein Profil-Icon und wähle <strong>"Keys"</strong> (oder gehe direkt zu <a href="https://openrouter.ai/keys" target="_blank" style="color: var(--accent-blue); text-decoration: none;">openrouter.ai/keys</a>).</li>
+                    <li>Klicke auf <strong>"Create Key"</strong>, gib dem Key einen Namen (z. B. "Forex-Dashboard") und klicke auf <strong>"Create"</strong>. Kopiere den Key sofort.</li>
+                    <li>Füge den Key oben ein, wähle ein Modell (z. B. Llama 3 8B) und klicke auf <strong>"Speichern"</strong>. Die kostenlosen Modelle benötigen kein Guthaben!</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="workflow-grid-container">
+            <div class="workflow-grid">
+                <!-- Step 1 -->
+                <div class="node-card pending" id="node-extraction" style="grid-column: 1; grid-row: 1;">
+                    <div class="node-header">
+                        <span class="node-icon">📥</span>
+                        <span class="node-title">1. Telegram-Extraktion</span>
+                        <span class="node-badge" id="badge-extraction">Bereit</span>
+                    </div>
+                    <p class="node-desc">Extrahiert Forex-Dateien (.ex4, .ex5, .set) und teilt Chatlogs für LLMs.</p>
+                    <div class="node-progress-container">
+                        <div class="node-progress-fill" id="progress-extraction"></div>
+                    </div>
+                    <div class="node-actions">
+                        <button class="btn-run-step" onclick="runPipeline('extraction')">▶ Ausführen</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Arrow 1 -> 2 -->
+                <div class="arrow-container arrow-down-mobile">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <polyline points="19 12 12 19 5 12"></polyline>
+                    </svg>
+                </div>
+
+                <!-- Desktop Arrow 1 -> 2 -->
+                <div class="arrow-container arrow-right" style="grid-column: 2; grid-row: 1;">
+                    <svg width="40" height="24" viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="35" y2="12"></line>
+                        <polyline points="29 6 35 12 29 18"></polyline>
+                    </svg>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="node-card pending" id="node-analysis" style="grid-column: 3; grid-row: 1;">
+                    <div class="node-header">
+                        <span class="node-icon">🧠</span>
+                        <span class="node-title">2. EA-Details Analyse (LLM)</span>
+                        <span class="node-badge" id="badge-analysis">Bereit</span>
+                    </div>
+                    <p class="node-desc">Analysiert EAs mit Gemini LLM (Timeframe, Paare, Beschreibung & Risiken).</p>
+                    
+                    <!-- Progress/Limit Slider -->
+                    <div style="margin: 0.5rem 0; display: flex; flex-direction: column; gap: 0.25rem; background: rgba(0,0,0,0.2); padding: 0.5rem 0.75rem; border-radius: 8px; border: 1px solid var(--border-glass);">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary);">
+                            <span>Max. EAs zu bewerten:</span>
+                            <span id="limit-val" style="font-weight: 600; color: var(--accent-purple);">15</span>
+                        </div>
+                        <input type="range" id="limit-slider" min="5" max="430" value="15" step="5" style="width: 100%; accent-color: var(--accent-purple); cursor: pointer;" oninput="document.getElementById('limit-val').innerText = this.value == 430 ? 'Alle (429)' : this.value">
+                    </div>
+
+                    <!-- Already Analyzed Count and Cache Reset -->
+                    <div style="margin: 0.5rem 0; display: flex; flex-direction: column; gap: 0.5rem; background: rgba(0,0,0,0.2); padding: 0.5rem 0.75rem; border-radius: 8px; border: 1px solid var(--border-glass); font-size: 0.75rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                            <span style="color: var(--text-secondary);">Bereits analysiert: <strong id="analyzed-count-display" style="color: var(--accent-green);">0</strong> EAs</span>
+                            <button class="btn" id="reset-cache-btn" onclick="resetAnalysisCache()" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; border-radius: 6px; cursor: pointer; transition: all 0.2s; height: auto; width: auto; line-height: 1;">Leeren 🗑️</button>
+                        </div>
+                        <button class="btn" id="show-insights-btn" onclick="openInsightsModal()" style="width: 100%; padding: 0.35rem; font-size: 0.75rem; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: #93c5fd; border-radius: 6px; cursor: pointer; transition: all 0.2s; text-align: center; height: auto; line-height: 1.2;">👁️ Antworten anzeigen (Tabelle)</button>
+                    </div>
+
+                    <div class="node-progress-container">
+                        <div class="node-progress-fill" id="progress-analysis"></div>
+                    </div>
+                    <div class="node-actions">
+                        <button class="btn-run-step" onclick="runPipeline('analysis')">▶ Ausführen</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Arrow 2 -> 3 -->
+                <div class="arrow-container arrow-down-mobile">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <polyline points="19 12 12 19 5 12"></polyline>
+                    </svg>
+                </div>
+
+                <!-- Desktop Arrow 2 -> 3 -->
+                <div class="arrow-container arrow-right" style="grid-column: 4; grid-row: 1;">
+                    <svg width="40" height="24" viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="35" y2="12"></line>
+                        <polyline points="29 6 35 12 29 18"></polyline>
+                    </svg>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="node-card pending" id="node-dashboard_gen" style="grid-column: 5; grid-row: 1;">
+                    <div class="node-header">
+                        <span class="node-icon">📊</span>
+                        <span class="node-title">3. Dashboard-Update</span>
+                        <span class="node-badge" id="badge-dashboard_gen">Bereit</span>
+                    </div>
+                    <p class="node-desc">Aktualisiert die Dashboard-Statistiken und integriert den Analyse-Bericht.</p>
+                    <div class="node-progress-container">
+                        <div class="node-progress-fill" id="progress-dashboard_gen"></div>
+                    </div>
+                    <div class="node-actions">
+                        <button class="btn-run-step" onclick="runPipeline('dashboard_gen')">▶ Ausführen</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Arrow 3 -> 4 -->
+                <div class="arrow-container arrow-down-mobile">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <polyline points="19 12 12 19 5 12"></polyline>
+                    </svg>
+                </div>
+
+                <!-- Desktop Arrow 3 -> 4 -->
+                <div class="arrow-container arrow-down-corner" style="grid-column: 5; grid-row: 2;">
+                    <svg width="24" height="40" viewBox="0 0 24 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="35"></line>
+                        <polyline points="6 29 12 35 18 29"></polyline>
+                    </svg>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="node-card pending" id="node-backtest_config" style="grid-column: 5; grid-row: 3;">
+                    <div class="node-header">
+                        <span class="node-icon">⚙️</span>
+                        <span class="node-title">4. Backtest-Setup</span>
+                        <span class="node-badge" id="badge-backtest_config">Bereit</span>
+                    </div>
+                    <p class="node-desc">Qualifiziert EA-Kandidaten und generiert die Backtester-Konfiguration.</p>
+                    <div class="node-progress-container">
+                        <div class="node-progress-fill" id="progress-backtest_config"></div>
+                    </div>
+                    <div class="node-actions">
+                        <button class="btn-run-step" onclick="runPipeline('backtest_config')">▶ Ausführen</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Arrow 4 -> 5 -->
+                <div class="arrow-container arrow-down-mobile">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <polyline points="19 12 12 19 5 12"></polyline>
+                    </svg>
+                </div>
+
+                <!-- Desktop Arrow 4 -> 5 -->
+                <div class="arrow-container arrow-left" style="grid-column: 4; grid-row: 3;">
+                    <svg width="40" height="24" viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="35" y1="12" x2="5" y2="12"></line>
+                        <polyline points="11 6 5 12 11 18"></polyline>
+                    </svg>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="node-card pending" id="node-backtest_run" style="grid-column: 3; grid-row: 3;">
+                    <div class="node-header">
+                        <span class="node-icon">🚀</span>
+                        <span class="node-title">5. Backtest-Lauf (MT5)</span>
+                        <span class="node-badge" id="badge-backtest_run">Bereit</span>
+                    </div>
+                    <p class="node-desc">Führt die qualifizierten EAs vollautomatisch im MT5 Strategy Tester aus.</p>
+                    <div class="node-progress-container">
+                        <div class="node-progress-fill" id="progress-backtest_run"></div>
+                    </div>
+                    <div class="node-actions">
+                        <button class="btn-run-step" onclick="runPipeline('backtest_run')">▶ Ausführen</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Arrow 5 -> 6 -->
+                <div class="arrow-container arrow-down-mobile">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <polyline points="19 12 12 19 5 12"></polyline>
+                    </svg>
+                </div>
+
+                <!-- Desktop Arrow 5 -> 6 -->
+                <div class="arrow-container arrow-left" style="grid-column: 2; grid-row: 3;">
+                    <svg width="40" height="24" viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="35" y1="12" x2="5" y2="12"></line>
+                        <polyline points="11 6 5 12 11 18"></polyline>
+                    </svg>
+                </div>
+
+                <!-- Step 6 -->
+                <div class="node-card pending" id="node-backtest_results" style="grid-column: 1; grid-row: 3;">
+                    <div class="node-header">
+                        <span class="node-icon">🏆</span>
+                        <span class="node-title">6. Ergebnis-Dashboard</span>
+                        <span class="node-badge" id="badge-backtest_results">Bereit</span>
+                    </div>
+                    <p class="node-desc">Erzeugt das interaktive Backtest-Dashboard aus den Testergebnissen.</p>
+                    <div class="node-progress-container">
+                        <div class="node-progress-fill" id="progress-backtest_results"></div>
+                    </div>
+                    <div class="node-actions">
+                        <button class="btn-run-step" onclick="runPipeline('backtest_results')">▶ Ausführen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal Log Console -->
+        <div class="console-container">
+            <div class="console-header">
+                <div class="console-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <span class="console-title">Echtzeit-Ausgabekonsole (Subprozess-Logs)</span>
+                <button class="btn btn-console-copy" onclick="copyConsoleLogs()">💾 Logs kopieren</button>
+            </div>
+            <div class="console-box" id="console-box-content">
+                <div style="color: var(--text-secondary);">Konsolenausgabe bereit. Starte einen Schritt, um Logs anzuzeigen...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="summary-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeSummaryModal()">&times;</span>
+            <div class="modal-title">📋 Robot Catalog - Text Zusammenfassung</div>
+            <div class="modal-body">
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
+                    Hier ist die kompakte Liste aller analysierten Roboter und deren Bewertungen (nur Summen & Kennzahlen):
+                </p>
+                <textarea id="summary-text" class="summary-textarea" readonly></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="downloadSummaryText()">💾 Herunterladen (.txt)</button>
+                <button class="btn active" onclick="copySummaryText()">📋 Kopieren</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Insights Modal -->
+    <div id="insights-modal" class="modal">
+        <div class="modal-content" style="max-width: 1000px; width: 92%;">
+            <span class="close-btn" onclick="closeInsightsModal()">&times;</span>
+            <div class="modal-title">🧠 Analysierte EA-Details (LLM Cache)</div>
+            <div class="modal-body" style="overflow: hidden;">
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.25rem;">
+                    Hier sind die bisher vom LLM extrahierten Details und Risikobewertungen aus dem Cache aufgelistet:
+                </p>
+                <div style="max-height: 450px; overflow-y: auto; background: rgba(0,0,0,0.25); border-radius: 12px; border: 1px solid var(--border-glass);">
+                    <table style="width: 100%; table-layout: fixed; border-collapse: collapse; font-family: Inter, sans-serif; font-size: 0.85rem;">
+                        <thead>
+                            <tr style="position: sticky; top: 0; background: #181926; border-bottom: 2px solid var(--border-glass); text-align: left; z-index: 10;">
+                                <th style="padding: 0.75rem 1rem; color: var(--text-primary); width: 25%;">EA Name &amp; Dateien</th>
+                                <th style="padding: 0.75rem 1rem; color: var(--text-primary); width: 10%;">Strategie</th>
+                                <th style="padding: 0.75rem 1rem; color: var(--text-primary); width: 8%;">Risiko</th>
+                                <th style="padding: 0.75rem 1rem; color: var(--text-primary); width: 8%;">Timeframe</th>
+                                <th style="padding: 0.75rem 1rem; color: var(--text-primary); width: 10%;">Paare</th>
+                                <th style="padding: 0.75rem 1rem; color: var(--text-primary); width: 39%;">Beschreibung &amp; Warnungen</th>
+                            </tr>
+                        </thead>
+                        <tbody id="insights-modal-table-body">
+                            <!-- Dynamisch befüllt -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn active" onclick="closeInsightsModal()">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-notification" class="toast">Erfolgreich kopiert!</div>
+
+    <script src="dashboard.js?v=1.0.7"></script>
+</body>
+</html>

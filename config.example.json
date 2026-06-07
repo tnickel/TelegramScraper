@@ -1,0 +1,8 @@
+{
+  "phone": "+491701234567",
+  "api_id": 123456,
+  "api_hash": "telegram-api-hash-here",
+  "openrouter_api_key": "openrouter-api-key-here",
+  "openrouter_model": "meta-llama/llama-3.1-8b-instruct",
+  "backtester_root": "D:/Pfad/zum/Backtester"
+}

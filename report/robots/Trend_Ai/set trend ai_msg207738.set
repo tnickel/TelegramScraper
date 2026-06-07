@@ -1,0 +1,46 @@
+TmodeEntry=== Entry Setup ==
+modeEntry=0
+modeInstant=true
+magico=1982
+tvolumen=== Volumen Calculation ==
+lot_mode=0
+uLotsValue=0.1
+tstop=== Stop Loss ==
+sl_mode=1
+uStopLossValue=50.0
+sl_candles_shift=2
+sl_pips_from_candle=5.0
+ttakeprofit=== Take Profit ==
+tp_mode=2
+uTakeProfitValue=2.0
+tcloseall=== Close All Setup ==
+closeAll_on=false
+profit_limit=100.0
+loss_limit=100.0
+tdailylimits=== Daily Limits Setup ==
+daily_limits_on=false
+daily_win_limit=500.0
+daily_loss_limit=500.0
+daily_limits_close_all=true
+daily_limits_close_platform=true
+Tbk=== Breakeven Setup ==
+breakevenOn=true
+userBkvPips=10.0
+userBkvStep=3.0
+ttsl=== TrailingStop Setup ==
+tsl_on=true
+tsl_start=10.0
+tsl_step=10.0
+tsl_distance=20.0
+T1=== Trading Sessions ==
+sessioncontrol=false
+uTimeZone=-3.0
+timeStart=00:00:00
+timeEnd=23:59:59
+Tcustom===== Indicator Setup ====
+Tcloseopposite=== Close On Opposite ==
+close_on_opposite_on=true
+tcountfilter=== Count Trades Filter ==
+count_max_positions=1
+count_max_buys=1
+count_max_sells=1
