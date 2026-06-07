@@ -28,3 +28,6 @@ telegram_scraper.log
 # Generierte lokale Laufzeitdaten
 data/*.db
 data/batch_config.json
+
+# Backtest-Berichte (lokaler Symlink)
+backtest_reports/

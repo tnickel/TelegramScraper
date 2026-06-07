@@ -94,7 +94,8 @@ def main():
         has_equity_curve = report_png_path.exists()
         image_name = report_png_path.name if has_equity_curve else ""
         
-        relative_image_path = report_png_path.resolve().as_uri() if has_equity_curve else ""
+        import urllib.parse
+        relative_image_path = f"../backtest_reports/{urllib.parse.quote(folder.name)}/{urllib.parse.quote(image_name)}" if has_equity_curve else ""
         
         # Parse metrics safely
         profit = 0.0
