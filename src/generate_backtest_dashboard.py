@@ -209,6 +209,7 @@ def main():
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MetaTrader Backtest Ergebnisse</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {{
             --bg-primary: #0b0b14;
@@ -297,6 +298,20 @@ def main():
         .modal-content {{ max-width: 90%; max-height: 85%; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-glass); background: #000; display: flex; justify-content: center; align-items: center; }}
         .modal-content img {{ max-width: 100%; max-height: 100%; object-fit: contain; }}
         .close-btn {{ position: absolute; top: 2rem; right: 2rem; font-size: 2.5rem; color: #fff; cursor: pointer; }}
+        
+        /* Premium Backtest Button */
+        .btn-run-backtest {{
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }}
+        .btn-run-backtest:hover {{
+            background-color: #2563eb !important;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px rgba(59, 130, 246, 0.2);
+        }}
+        .btn-run-backtest:active {{
+            transform: translateY(0);
+        }}
     </style>
 </head>
 <body>
@@ -375,6 +390,10 @@ def main():
                 <option value="profitfactor-desc">Profit Factor (Höchster zuerst)</option>
                 <option value="trades-desc">Trades (Meiste zuerst)</option>
             </select>
+        </div>
+        <div class="filter-group" style="flex:0 0 auto; min-width:auto; display:flex; align-items:center; gap:0.5rem; height:42px; margin-top:auto;">
+            <input type="checkbox" id="keep-open-checkbox" style="width:18px; height:18px; cursor:pointer;">
+            <label for="keep-open-checkbox" style="font-size:0.85rem; font-weight:600; color:#fff; cursor:pointer; user-select:none;">MT4/MT5 offen lassen</label>
         </div>
         <div class="toggle-group">
             <button class="toggle-btn active" id="btn-grid" onclick="setView('grid')">Kacheln</button>
@@ -556,7 +575,8 @@ def main():
                     return;
                 }}
                 
-                data.forEach(item => {{
+                data.forEach((item, idx) => {{
+                    const globalIdx = start + idx;
                     const profitClass = item.profit > 0 ? 'positive' : (item.profit < 0 ? 'negative' : '');
                     const profitSign = item.profit > 0 ? '+' : '';
                     const curveHtml = item.has_curve 
@@ -598,9 +618,14 @@ def main():
                             </div>
                             ${{curveHtml}}
                         </div>
-                        <div class="run-card-footer">
-                            <span>Trades: ${{item.trades}} (Win: ${{item.win_rate.toFixed(1)}}%)</span>
-                            <span>${{item.timestamp}}</span>
+                        <div class="run-card-footer" style="flex-direction: column; gap: 0.8rem; align-items: stretch;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                <span>Trades: ${{item.trades}} (Win: ${{item.win_rate.toFixed(1)}}%)</span>
+                                <span>${{item.timestamp}}</span>
+                            </div>
+                            <button class="btn-run-backtest" onclick="event.stopPropagation(); runSingleBacktest(backtestData[${{globalIdx}}], this)" style="background: var(--accent-blue); border: none; color: #fff; padding: 0.45rem; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; font-size: 0.8rem; width: 100%;">
+                                <i class="fas fa-play" style="font-size: 0.7rem;"></i> Backtest wiederholen
+                            </button>
                         </div>
                     `;
                     frag.appendChild(div);
@@ -654,6 +679,11 @@ def main():
                                     <div class="detail-p">Sharpe Ratio: <span>${{item.sharpe_ratio.toFixed(2)}}</span></div>
                                     <div class="detail-p">Win Rate: <span>${{item.win_rate.toFixed(1)}}%</span></div>
                                     <div class="detail-p">Status Details: <span>${{item.status_full}}</span></div>
+                                    <div style="grid-column: 1 / -1; margin-top: 0.75rem;">
+                                        <button class="btn-run-backtest" onclick="event.stopPropagation(); runSingleBacktest(backtestData[${{globalIdx}}], this)" style="background: var(--accent-blue); border: none; color: #fff; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem;">
+                                            <i class="fas fa-play" style="font-size: 0.75rem;"></i> Backtest wiederholen
+                                        </button>
+                                    </div>
                                 </div>
                                 ${{item.has_curve ? `
                                 <div class="expanded-image" onclick="openModal('${{item.image_path}}')">
@@ -668,7 +698,80 @@ def main():
                 renderPaginationBar(allData.length, pageSize, 'pagination-table');
             }}
         }}
+
+        async function runSingleBacktest(item, btn) {{
+            if (btn.disabled) return;
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.style.background = '#4b5563';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Test läuft...';
+            
+            let modelVal = '1';
+            const modelDesc = String(item.model).toLowerCase();
+            if (modelDesc.includes('every tick') || modelDesc === '0') {{
+                modelVal = '0';
+            }} else if (modelDesc.includes('1 minute') || modelDesc.includes('1m') || modelDesc === '1') {{
+                modelVal = '1';
+            }} else if (modelDesc.includes('open price') || modelDesc === '2') {{
+                modelVal = '2';
+            }} else if (modelDesc.includes('real tick') || modelDesc === '4') {{
+                modelVal = '4';
+            }}
+            
+            const keepOpenCheckbox = document.getElementById('keep-open-checkbox');
+            const keepOpen = keepOpenCheckbox ? keepOpenCheckbox.checked : false;
+            
+            const params = new URLSearchParams({{
+                expert: item.expert,
+                platform: item.platform || 'MT5',
+                symbol: item.symbol,
+                period: item.period,
+                from: item.from_date || '2025-01-01',
+                to: item.to_date || '2026-06-01',
+                model: modelVal,
+                deposit: item.deposit || '10000',
+                leverage: item.leverage || '1:100',
+                keep_open: keepOpen ? 'true' : 'false'
+            }});
+            
+            try {{
+                const response = await fetch('/api/backtest/run?' + params.toString());
+                const res = await response.json();
+                
+                if (res.status === 'success') {{
+                    btn.style.background = 'var(--accent-green)';
+                    btn.innerHTML = '✅ Erfolgreich!';
+                    setTimeout(() => {{
+                        window.location.reload();
+                    }}, 1500);
+                }} else {{
+                    btn.style.background = 'var(--accent-red)';
+                    btn.innerHTML = '❌ Fehler!';
+                    alert('Backtest fehlgeschlagen:\\n' + (res.message || 'Unbekannter Fehler') + '\\n\\nLogs:\\n' + (res.output || 'Keine Ausgabe'));
+                    btn.disabled = false;
+                    btn.style.background = 'var(--accent-blue)';
+                    btn.innerHTML = originalText;
+                }}
+            }} catch (err) {{
+                btn.style.background = 'var(--accent-red)';
+                btn.innerHTML = '❌ Fehler!';
+                alert('Netzwerkfehler beim Starten des Backtests: ' + err.message);
+                btn.disabled = false;
+                btn.style.background = 'var(--accent-blue)';
+                btn.innerHTML = originalText;
+            }}
+        }}
+
         render();
+
+        // Checkbox state persistence
+        const keepOpenCheckbox = document.getElementById('keep-open-checkbox');
+        if (keepOpenCheckbox) {{
+            keepOpenCheckbox.checked = localStorage.getItem('backtest_keep_open') === 'true';
+            keepOpenCheckbox.addEventListener('change', (e) => {{
+                localStorage.setItem('backtest_keep_open', e.target.checked);
+            }});
+        }}
     </script>
 </body>
 </html>

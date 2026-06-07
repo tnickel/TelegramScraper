@@ -23,6 +23,7 @@ def parse_args():
     parser.add_argument("--dry-run", action="store_true", help="Erstellt nur die JSON-Konfiguration, startet aber keinen Backtest")
     parser.add_argument("--model", type=int, default=1, choices=[0, 1, 2, 3, 4], 
                         help="Tick-Modell: 0=Every tick, 1=1m OHLC (Default), 2=Open price, 4=Real ticks")
+    parser.add_argument("--keep-open", action="store_true", help="MetaTrader nach dem Testen offen lassen und sichtbar ausführen")
     return parser.parse_args()
 
 def main():
@@ -96,8 +97,8 @@ def main():
             "currency": "USD",
             "leverage": "1:100",
             "model": args.model,
-            "use_virtual_desktop": True,
-            "auto_kill_mt5": True
+            "use_virtual_desktop": not args.keep_open,
+            "auto_kill_mt5": not args.keep_open
         },
         "runs": runs
     }

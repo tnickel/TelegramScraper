@@ -112,6 +112,8 @@ class DashboardRequestHandler(SimpleHTTPRequestHandler):
             self.handle_robots()
         elif self.path.startswith("/api/stats"):
             self.handle_stats()
+        elif self.path.startswith("/api/backtest/run"):
+            self.handle_backtest_run()
         else:
             # Fallback to serving static files
             super().do_GET()
@@ -317,6 +319,80 @@ class DashboardRequestHandler(SimpleHTTPRequestHandler):
                 self.send_json_response({"status": "error", "message": f"API-Fehler {res.status_code}: {res.text}"})
         except Exception as e:
             self.send_json_response({"status": "error", "message": f"Netzwerkfehler: {str(e)}"})
+
+    def handle_backtest_run(self):
+        parsed_url = urlparse(self.path)
+        params = parse_qs(parsed_url.query)
+        
+        expert = params.get("expert", [""])[0].strip()
+        platform = params.get("platform", ["MT5"])[0].strip()
+        symbol = params.get("symbol", ["EURUSD"])[0].strip()
+        period = params.get("period", ["M15"])[0].strip()
+        from_date = params.get("from", ["2025-01-01"])[0].strip()
+        to_date = params.get("to", ["2026-06-01"])[0].strip()
+        model = params.get("model", ["1"])[0].strip()
+        deposit = params.get("deposit", ["10000"])[0].strip()
+        leverage = params.get("leverage", ["1:100"])[0].strip()
+        keep_open = params.get("keep_open", ["false"])[0].strip().lower() == "true"
+        
+        if not expert:
+            self.send_json_response({"status": "error", "message": "Expert-Name fehlt."})
+            return
+            
+        py_executable = sys.executable or "python"
+        cmd = [
+            py_executable, 
+            "src/run_single_backtest.py",
+            "--expert", expert,
+            "--platform", platform,
+            "--symbol", symbol,
+            "--period", period,
+            "--from-date", from_date,
+            "--to-date", to_date,
+            "--model", model,
+            "--deposit", deposit,
+            "--leverage", leverage
+        ]
+        if keep_open:
+            cmd.append("--keep-open")
+        
+        try:
+            # Execute run_single_backtest.py
+            p = subprocess.run(
+                cmd,
+                cwd=str(WORKSPACE_DIR),
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=180
+            )
+            
+            # Re-generate the backtest results dashboard HTML
+            subprocess.run([py_executable, "src/generate_backtest_dashboard.py"], cwd=str(WORKSPACE_DIR))
+            
+            if p.returncode == 0:
+                self.send_json_response({
+                    "status": "success",
+                    "output": p.stdout
+                })
+            else:
+                self.send_json_response({
+                    "status": "error",
+                    "message": f"Backtest fehlgeschlagen (Fehlercode {p.returncode})",
+                    "output": p.stdout
+                })
+        except subprocess.TimeoutExpired:
+            self.send_json_response({
+                "status": "error",
+                "message": "Timeout: Der Backtest hat länger als 3 Minuten gedauert."
+            })
+        except Exception as e:
+            self.send_json_response({
+                "status": "error",
+                "message": f"Fehler bei Backtest-Ausführung: {str(e)}"
+            })
 
     def send_json_response(self, data):
         self.send_response(200)
